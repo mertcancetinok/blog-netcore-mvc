@@ -1,0 +1,9 @@
+C:\Users\Berkcan\Desktop\blog-net\blog.business\bin\Debug\netstandard2.0\blog.business.deps.json
+C:\Users\Berkcan\Desktop\blog-net\blog.business\bin\Debug\netstandard2.0\blog.business.dll
+C:\Users\Berkcan\Desktop\blog-net\blog.business\bin\Debug\netstandard2.0\blog.business.pdb
+C:\Users\Berkcan\Desktop\blog-net\blog.business\obj\Debug\netstandard2.0\blog.business.csprojAssemblyReference.cache
+C:\Users\Berkcan\Desktop\blog-net\blog.business\obj\Debug\netstandard2.0\blog.business.AssemblyInfoInputs.cache
+C:\Users\Berkcan\Desktop\blog-net\blog.business\obj\Debug\netstandard2.0\blog.business.AssemblyInfo.cs
+C:\Users\Berkcan\Desktop\blog-net\blog.business\obj\Debug\netstandard2.0\blog.business.csproj.CoreCompileInputs.cache
+C:\Users\Berkcan\Desktop\blog-net\blog.business\obj\Debug\netstandard2.0\blog.business.dll
+C:\Users\Berkcan\Desktop\blog-net\blog.business\obj\Debug\netstandard2.0\blog.business.pdb

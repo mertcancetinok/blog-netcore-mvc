@@ -1,0 +1,102 @@
+﻿@model List<Blog>
+
+@{
+    
+    Layout = "_AdminLayout";
+}
+
+<section class="blog-button p-3">
+    <div class="container">
+        <div class="row">
+            <a class="btn btn-success p-4 mr-1" asp-controller="Admin" asp-action="BlogCreate">Blog Ekle</a>
+
+
+        </div>
+    </div>
+</section>
+
+<section class="blog-tables p-3 my-5">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Bloglar</h3>
+                <hr>
+
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </th>
+                                <th>Blog Adı</th>
+                                <th>Blog İçeriği</th>
+                                <th>Url</th>
+                                <th>Okuma Süresi</th>
+                                <th>Eklenme Tarihi</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count > 0)
+                            {
+                                
+                                @foreach (var blog in Model)
+                                {
+                                    <tr class="tr-shadow">
+                                        <td>
+                                            <label class="au-checkbox">
+                                                <input type="checkbox">
+                                                <span class="au-checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>@blog.Name</td>
+                                        <td>
+                                            @(blog.Content.Length > 50 ? @blog.Content.Substring(0, 50).ToString() : @blog.Content)
+                                        </td>
+                                        <td>@blog.Url</td>
+                                        <td>@blog.ReadTime</td>
+                                        <td class="desc">@blog.AddedTime.ToString()</td>
+                                        
+                                        <td>
+                                            <div class="table-data-feature">
+                                                
+                                                
+                                                    
+                                                    <a href="/Admin/BlogEdit/@blog.Id" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <i class="zmdi zmdi-edit">
+                                                        </i>
+                                                    </a>
+                                                    
+                                                
+                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </button>
+                                                <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                                    <i class="zmdi zmdi-more"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <p>Kayıtlı blog bulunamadı</p>
+                            }
+                        </tbody>
+                        </table>
+                </div>
+                <!-- END DATA TABLE -->
+            </div>
+        </div>
+
+    </div>
+</section>
+

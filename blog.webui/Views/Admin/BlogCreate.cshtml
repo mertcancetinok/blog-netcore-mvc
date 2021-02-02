@@ -1,0 +1,24 @@
+﻿@model Blog 
+@{ 
+    Layout = "_AdminLayout";
+}
+
+
+<form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogCreate">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReadTime"></label>
+        <input class="form-control" asp-for="ReadTime" />
+        <span asp-validation-for="ReadTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Content"></label>
+        <textarea rows="6" class="form-control" asp-for="Content" ></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-success"/>
+</form>
