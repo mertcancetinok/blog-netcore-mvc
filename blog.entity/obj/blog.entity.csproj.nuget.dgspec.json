@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Berkcan\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj": {}
+    "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Berkcan\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj": {
+    "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Berkcan\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj",
+        "projectUniqueName": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj",
         "projectName": "blog.entity",
-        "projectPath": "C:\\Users\\Berkcan\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj",
-        "packagesPath": "C:\\Users\\Berkcan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Berkcan\\Desktop\\blog-net\\blog.entity\\obj\\",
+        "projectPath": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj",
+        "packagesPath": "C:\\Users\\mertc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Berkcan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mertc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

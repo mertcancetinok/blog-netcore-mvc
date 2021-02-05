@@ -41,6 +41,17 @@ namespace blog.data.Concrete.EfCore
             
         }
 
+        
+
+        public TEntity GetById(int id)
+        {
+            using (var context = new TContext())
+            {
+                return context.Set<TEntity>().Find(id);
+                    
+            }
+        }
+
         public void Update(TEntity T)
         {
             using (var context = new TContext())

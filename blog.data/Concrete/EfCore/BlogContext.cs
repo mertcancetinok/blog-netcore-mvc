@@ -16,7 +16,7 @@ namespace blog.entity
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
-            optionsBuilder.UseSqlServer("Server=DESKTOP-FTI4HM5;Database=Blog;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-OJ7358A;Database=Blog;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

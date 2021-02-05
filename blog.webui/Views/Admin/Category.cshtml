@@ -1,0 +1,110 @@
+﻿@model List<Category>
+@{
+    Layout = "_AdminLayout";
+}
+<section class="blog-button p-3">
+    <div class="container">
+        <div class="row">
+            <a class="btn btn-success p-4 mr-1" asp-controller="Admin" asp-action="CategoryCreate">Kategori Ekle</a>
+
+
+        </div>
+    </div>
+</section>
+
+<section class="blog-tables p-3 my-5">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Kategoriler</h3>
+                <hr>
+
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </th>
+                                <th>Kategori Adı</th>
+                                <th>Kategori Icon</th>
+                                <th>Kategori Url</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count > 0)
+                            {
+
+                                @foreach (var category in Model)
+                                {
+                                    <tr class="tr-shadow">
+                                        <td>
+                                            <label class="au-checkbox">
+                                                <input type="checkbox">
+                                                <span class="au-checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>@category.Name</td>
+                                        <td><i class="@category.IconClass"></i></td>
+                                        <td>@category.Url</td>
+
+
+                                        <td>
+                                            <div class="table-data-feature">
+
+
+
+                                                <a href="/admin/kategori/@category.Id" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="zmdi zmdi-edit">
+                                                    </i>
+                                                </a>
+
+                                                <form asp-controller="Admin" asp-action="CategoryDelete" method="get">
+                                                    <input type="hidden" value="@category.Id" name="categoryId"/>
+                                                    <button class="item category-delete" data-toggle="tooltip" data-placement="top" title="Sil" type="submit">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </button>
+                                                </form>
+                                                
+                                                <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                                    <i class="zmdi zmdi-more"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr class="text-danger">Kayıt bulunumadı</tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END DATA TABLE -->
+            </div>
+        </div>
+
+    </div>
+</section>
+@section CustomJS{
+
+    <script>
+        $('.category-delete').click(function (e) {
+            if (confirm("Silmek istediğine eminmisin")) {
+
+            }
+            else {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+}

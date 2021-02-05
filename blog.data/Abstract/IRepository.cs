@@ -9,7 +9,9 @@ namespace blog.data.Abstract
     public interface IRepository<TEntity>
     {
         List<TEntity> GetAll();
+        TEntity GetById(int id);
         void Create(TEntity T);
+        
         void Update(TEntity T);
         void Delete(TEntity T);
         

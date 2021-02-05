@@ -30,8 +30,10 @@ namespace blog.webui
             services.AddControllersWithViews();
             services.AddScoped<blog.data.Abstract.IBlogRepository, EfCoreBlogRepository>();
             services.AddScoped<blog.data.Abstract.IBloggerRepository, EfCoreBloggerRepository>();
+            services.AddScoped<blog.data.Abstract.ICategoryRepository, EfCoreCategoryRepository>();
             services.AddScoped<IBlogService, BlogManager>();
             services.AddScoped<IBloggerService, BloggerManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +58,38 @@ namespace blog.webui
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "categoryedit",
+                    pattern: "admin/kategori/{id}",
+                    defaults: new { Controller = "Admin", Action = "CategoryEdit" }
+                    );
+                endpoints.MapControllerRoute(
+                    name: "categories",
+                    pattern: "admin/kategori",
+                    defaults: new {Controller="Admin",Action="Category"}
+                    );
+                
+                endpoints.MapControllerRoute(
+                    name: "adminblogger",
+                    pattern: "admin/blogger",
+                    defaults: new { Controller = "Admin", Action = "Blogger" }
+                    );
+                endpoints.MapControllerRoute(
+                    name: "adminbloggerdetails",
+                    pattern: "admin/bloggers/{id?}",
+                    defaults: new { Controller = "Admin", Action = "BloggerEdit" }
+                    );
+                endpoints.MapControllerRoute(
+                    name:"adminblogs",
+                    pattern:"admin/blog",
+                    defaults: new {Controller="Admin",Action="Blog"} 
+                    );
+                endpoints.MapControllerRoute(
+                    name: "adminblogs",
+                    pattern: "admin/blogs/{id?}",
+                    defaults: new { Controller = "Admin", Action = "BlogEdit" }
+                    );
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

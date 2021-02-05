@@ -47,22 +47,28 @@
                     <div class="header__navbar">
                         <ul class="list-unstyled">
                             <li class="has-sub">
-                                <a href="#">
+                                <a asp-controller="Admin" asp-action="Index">
                                     <i class="fas fa-tachometer-alt"></i>Dashboard
                                     <span class="bot-line"></span>
                                 </a>
 
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="/admin/blog">
                                     <i class="fas fa-book"></i>
                                     <span class="bot-line"></span>Blog
                                 </a>
                             </li>
                             <li>
-                                <a href="table.html">
+                                <a href="/admin/blogger">
                                     <i class="fas fa-trophy"></i>
-                                    <span class="bot-line"></span>Features
+                                    <span class="bot-line"></span>Blogger
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/kategori">
+                                    <i class="fas fa-trophy"></i>
+                                    <span class="bot-line"></span>Category
                                 </a>
                             </li>
                             <li class="has-sub">
@@ -575,27 +581,35 @@
                 </div>
             </section>
         </div>
-        <!-- Jquery JS-->
-        <script src="~/js/jquery-3.2.1.min.js"></script>
-        <!-- Bootstrap JS-->
-        <script src="~/js/popper.min.js"></script>
-        <script src="~/js/bootstrap.min.js"></script>
-        <!-- Vendor JS       -->
-        <script src="~/js/slick.min.js">
-        </script>
-        <script src="~/js/wow.min.js"></script>
-        <script src="~/js/animsition.min.js"></script>
-        <script src="~/js/bootstrap-progressbar.min.js">
-        </script>
-        <script src="~/js/jquery.waypoints.min.js"></script>
-        <script src="~/js/jquery.counterup.min.js">
-        </script>
-        <script src="~/js/circle-progress.min.js"></script>
-        <script src="~/js/perfect-scrollbar.js"></script>
-        <script src="~/js/Chart.bundle.min.js"></script>
-        <script src="~/js/select2.min.js">
-        </script>
+    </div>
+    <!-- Jquery JS-->
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="~/js/slick.min.js">
+    </script>
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/animsition.min.js"></script>
+    <script src="~/js/bootstrap-progressbar.min.js">
+    </script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js">
+    </script>
+    <script src="~/js/circle-progress.min.js"></script>
+    <script src="~/js/perfect-scrollbar.js"></script>
+    <script src="~/js/Chart.bundle.min.js"></script>
+    <script src="~/js/select2.min.js">
+    </script>
 
-        <!-- Main JS-->
-        <script src="~/js/main.js"></script>
+    <!-- Main JS-->
+    <script src="~/js/main.js"></script>
+    @if (IsSectionDefined("CustomJS"))
+    {
+        @RenderSection("CustomJS", false)
+
+    }
+
 </body>
+</html>

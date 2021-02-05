@@ -23,6 +23,8 @@ namespace blog.business.Concrete
 
         public void Delete(Blogger T)
         {
+
+            _bloggerRepository.Delete(T);
             
         }
 
@@ -31,9 +33,14 @@ namespace blog.business.Concrete
             return _bloggerRepository.GetAll();
         }
 
+        public Blogger GetById(int id)
+        {
+            return _bloggerRepository.GetById(id);
+        }
+
         public void Update(Blogger T)
         {
-            throw new NotImplementedException();
+            _bloggerRepository.Update(T);
         }
     }
 }

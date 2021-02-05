@@ -9,6 +9,8 @@ namespace blog.data.Abstract
 {
     public interface IBlogRepository:IRepository<Blog>
     {
-        List<Blog> GetAllWithBloggerName(int? id);
+        Blog GetByIdWithCategories(int id);
+        void Create(Blog T, int[] categoryIds);
+
     }
 }

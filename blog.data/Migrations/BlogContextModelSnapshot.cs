@@ -26,7 +26,7 @@ namespace blog.data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<DateTime>("AddedTime")
+                    b.Property<DateTime?>("AddedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("BloggerId")
@@ -98,6 +98,9 @@ namespace blog.data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -9,6 +9,7 @@ namespace blog.business.Abstract
 {
     public interface IBloggerService
     {
+        Blogger GetById(int id);
         List<Blogger> GetAll();
         void Create(Blogger T);
         void Update(Blogger T);

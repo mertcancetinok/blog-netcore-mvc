@@ -1,4 +1,4 @@
-﻿@model Blog 
+﻿@model BlogCategoriesViewModel 
 @{ 
     Layout = "_AdminLayout";
 }
@@ -6,19 +6,35 @@
 
 <form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogCreate">
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input class="form-control" asp-for="Name" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="@Model.Blog.Name"></label>
+        <input class="form-control" asp-for="@Model.Blog.Name" />
+        <span asp-validation-for="@Model.Blog.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ReadTime"></label>
-        <input class="form-control" asp-for="ReadTime" />
-        <span asp-validation-for="ReadTime" class="text-danger"></span>
+        <label asp-for="@Model.Blog.Content"></label>
+        <textarea rows="6" class="form-control" asp-for="@Model.Blog.Content"></textarea>
+        <span asp-validation-for="@Model.Blog.Content" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Content"></label>
-        <textarea rows="6" class="form-control" asp-for="Content" ></textarea>
-        <span asp-validation-for="Content" class="text-danger"></span>
+        <label>Kategoriler</label>
+        @foreach (var item in Model.Categories)
+        {
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" 
+                       class="custom-control-input" 
+                       name="categoryId"
+                       value="@item.Id"
+                       id="category_@(item.Id)">
+                <label class="custom-control-label" for="category_@(item.Id)">@item.Name</label>
+            </div>
+        }
     </div>
-    <input type="submit" class="btn btn-success"/>
+    <div class="form-group">
+        <label asp-for="@Model.Blog.ReadTime"></label>
+        <input class="form-control" asp-for="@Model.Blog.ReadTime" />
+        <span asp-validation-for="@Model.Blog.ReadTime" class="text-danger"></span>
+    </div>
+
+
+    <input type="submit" class="btn btn-success" />
 </form>

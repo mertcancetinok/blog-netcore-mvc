@@ -9,6 +9,28 @@ namespace blog.business.Concrete
 {
     public class BlogManager : IBlogService
     {
+        private static string UrlTranslator(Blog translator)
+        {
+            translator.Url = translator.Name;
+            translator.Url = translator.Url.Trim();
+            translator.Url = translator.Url.ToLower();
+            translator.Url = translator.Url.Replace("ş", "s");
+            translator.Url = translator.Url.Replace("Ş", "s");
+            translator.Url = translator.Url.Replace("İ", "i");
+            translator.Url = translator.Url.Replace("I", "i");
+            translator.Url = translator.Url.Replace("ı", "i");
+            translator.Url = translator.Url.Replace("ö", "o");
+            translator.Url = translator.Url.Replace("Ö", "o");
+            translator.Url = translator.Url.Replace("ü", "u");
+            translator.Url = translator.Url.Replace("Ü", "u");
+            translator.Url = translator.Url.Replace("Ç", "c");
+            translator.Url = translator.Url.Replace("ç", "c");
+            translator.Url = translator.Url.Replace("ğ", "g");
+            translator.Url = translator.Url.Replace("Ğ", "g");
+            translator.Url = translator.Url.Replace(" ", "-");
+            translator.AddedTime = DateTime.Now;
+            return translator.Url;
+        }
         private IBlogRepository _blogRepository;
         public BlogManager(IBlogRepository blogRepository)
         {
@@ -16,24 +38,7 @@ namespace blog.business.Concrete
         }
         public void Create(Blog T)
         {
-            T.Url = T.Name;
-            T.Url = T.Url.Trim();
-            T.Url = T.Url.ToLower();
-            T.Url = T.Url.Replace("ş", "s");
-            T.Url = T.Url.Replace("Ş", "s");
-            T.Url = T.Url.Replace("İ", "i");
-            T.Url = T.Url.Replace("I", "i");
-            T.Url = T.Url.Replace("ı", "i");
-            T.Url = T.Url.Replace("ö", "o");
-            T.Url = T.Url.Replace("Ö", "o");
-            T.Url = T.Url.Replace("ü", "u");
-            T.Url = T.Url.Replace("Ü", "u");
-            T.Url = T.Url.Replace("Ç", "c");
-            T.Url = T.Url.Replace("ç", "c");
-            T.Url = T.Url.Replace("ğ", "g");
-            T.Url = T.Url.Replace("Ğ", "g");
-            T.Url = T.Url.Replace(" ", "-");
-            T.AddedTime = DateTime.Now;
+            T.Url = UrlTranslator(T);
             _blogRepository.Create(T);
        
             
@@ -51,14 +56,22 @@ namespace blog.business.Concrete
             
         }
 
-        public List<Blog> GetAllWithBloggerName(int? id)
+        
+        public Blog GetById(int id)
         {
-            return _blogRepository.GetAllWithBloggerName(id);
+            return _blogRepository.GetById(id);
         }
 
         public void Update(Blog T)
         {
+             T.Url = UrlTranslator(T);
             _blogRepository.Update(T);
+        }
+
+        public void Create(Blog T, int[] categoryIds)
+        {
+             T.Url = UrlTranslator(T);
+            _blogRepository.Create(T, categoryIds);
         }
     }
 }

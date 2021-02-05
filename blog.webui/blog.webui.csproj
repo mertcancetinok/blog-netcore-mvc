@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\blog.business\blog.business.csproj" />
     <ProjectReference Include="..\blog.data\blog.data.csproj" />
     <ProjectReference Include="..\blog.entity\blog.entity.csproj" />
