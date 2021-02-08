@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace blog.business.Abstract
 {
-    public interface IBloggerService
+    public interface IBloggerService:IValidator<Blogger>
     {
         Blogger GetById(int id);
         List<Blogger> GetAll();

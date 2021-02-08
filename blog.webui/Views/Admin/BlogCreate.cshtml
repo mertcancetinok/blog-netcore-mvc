@@ -7,21 +7,26 @@
 <form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogCreate">
     <div class="form-group">
         <label asp-for="@Model.Blog.Name"></label>
-        <input class="form-control" asp-for="@Model.Blog.Name" />
+        <input class="form-control" asp-for="@Model.Blog.Name" required />
         <span asp-validation-for="@Model.Blog.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Blog.Content"></label>
-        <textarea rows="6" class="form-control" asp-for="@Model.Blog.Content"></textarea>
+        <textarea rows="6" class="form-control" asp-for="@Model.Blog.Content" required></textarea>
         <span asp-validation-for="@Model.Blog.Content" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Blog.ImageUrl"></label>
+        <input class="form-control" asp-for="@Model.Blog.ImageUrl" required />
+        <span asp-validation-for="@Model.Blog.ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label>Kategoriler</label>
         @foreach (var item in Model.Categories)
         {
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" 
-                       class="custom-control-input" 
+                <input type="checkbox"
+                       class="custom-control-input"
                        name="categoryId"
                        value="@item.Id"
                        id="category_@(item.Id)">
@@ -31,7 +36,7 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.Blog.ReadTime"></label>
-        <input class="form-control" asp-for="@Model.Blog.ReadTime" />
+        <input class="form-control" asp-for="@Model.Blog.ReadTime" required min="1" />
         <span asp-validation-for="@Model.Blog.ReadTime" class="text-danger"></span>
     </div>
 

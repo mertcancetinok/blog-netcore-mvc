@@ -1,4 +1,5 @@
-﻿using blog.webui.Models;
+﻿using blog.business.Abstract;
+using blog.webui.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,11 +12,28 @@ namespace blog.webui.Controllers
 {
     public class HomeController : Controller
     {
+        private IBlogService _blogService;
+        public HomeController(IBlogService blogService)
+        {
+            this._blogService = blogService;
+        }
         
 
         public IActionResult Index()
         {
-            return View();
+            var homeModel = new HomeModel()
+            {
+                Popular = _blogService.MostPopularBlog(),
+                GetAll = _blogService.GetAll()
+            };
+            
+            
+            return View(homeModel);
+        }
+        public IActionResult BlogDetails(string Url)
+        {
+
+            return View(_blogService.GetBlogDetailsWithCategories(Url));
         }
 
 

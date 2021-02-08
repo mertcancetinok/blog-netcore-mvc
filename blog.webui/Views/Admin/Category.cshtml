@@ -1,6 +1,7 @@
 ﻿@model List<Category>
 @{
     Layout = "_AdminLayout";
+    ViewData["pageName"] = "Kategori";
 }
 <section class="blog-button p-3">
     <div class="container">
@@ -66,12 +67,12 @@
                                                 </a>
 
                                                 <form asp-controller="Admin" asp-action="CategoryDelete" method="get">
-                                                    <input type="hidden" value="@category.Id" name="categoryId"/>
+                                                    <input type="hidden" value="@category.Id" name="categoryId" />
                                                     <button class="item category-delete" data-toggle="tooltip" data-placement="top" title="Sil" type="submit">
                                                         <i class="zmdi zmdi-delete"></i>
                                                     </button>
                                                 </form>
-                                                
+
                                                 <button class="item" data-toggle="tooltip" data-placement="top" title="More">
                                                     <i class="zmdi zmdi-more"></i>
                                                 </button>
@@ -98,7 +99,7 @@
 
     <script>
         $('.category-delete').click(function (e) {
-            if (confirm("Silmek istediğine eminmisin")) {
+            if (confirm("Silmek istediğine emin misin")) {
 
             }
             else {

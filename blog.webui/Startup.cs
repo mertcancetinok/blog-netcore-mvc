@@ -89,7 +89,11 @@ namespace blog.webui
                     pattern: "admin/blogs/{id?}",
                     defaults: new { Controller = "Admin", Action = "BlogEdit" }
                     );
-
+                endpoints.MapControllerRoute(
+                    name:"blogdetails",
+                    pattern:"{url}",
+                    defaults:new {Controller="Home", Action= "BlogDetails"}
+                    );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

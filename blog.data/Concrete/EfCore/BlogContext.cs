@@ -11,6 +11,7 @@ namespace blog.entity
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Blogger> Bloggers { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<BlogCategory> BlogCategories{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,9 +21,17 @@ namespace blog.entity
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //One to one
             modelBuilder.Entity<Blogger>()
                 .HasMany(b => b.Blog)
                 .WithOne(bg => bg.Blogger);
+
+            //One to many
+            modelBuilder.Entity<Blog>()
+                .HasMany(c => c.Comments)
+                .WithOne(b => b.Blog);
+
+            //Many to many
             modelBuilder.Entity<BlogCategory>()
                 .HasKey(bc => new { bc.BlogId, bc.CategoryId });
             modelBuilder.Entity<BlogCategory>()

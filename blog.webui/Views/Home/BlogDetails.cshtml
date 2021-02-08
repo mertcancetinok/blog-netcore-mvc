@@ -1,0 +1,75 @@
+﻿@model Blog
+<div class="container">
+    @if (Model != null)
+    {
+
+        <p class="text-muted font-weight-normal mt-5">Anasayfa>Uzay>@Model.Name</p>
+        <p class="text-muted">@Model.ReadTime dakika okuma süresi</p>
+        <p class="text-right">@Model.AddedTime</p>
+        @foreach (var item in Model.BlogCategories)
+        {
+        <a class="text-right">@item.Category.Name</a> 
+        }
+        <div class="row my-3">
+            <div class="col-md-8">
+                @Model.Content
+            </div>
+            <div class="col-md-4">
+                <h2 class="h4 read-popular-news">Popüler Haberler</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+
+            <div class="comments col-md-12 my-5">
+                <h2>YORUMLAR</h2>
+                <div class="new-comment my-5">
+                    <form method="POST">
+                        <textarea cols="10" class="form-control" rows="5" style="width: 100%;"></textarea>
+                        <p>240</p>
+                        <input class="form-control w-25 mt-2" type="text" placeholder="Kullanıcı Adınız">
+                        <input type="submit" value="Gönder" class="btn btn-outline-success float-right">
+                    </form>
+                </div>
+                <div class="comment mt-5 p-5 text-white" style="background-color: #1E1A17;">
+
+                    <p class="d-inline-block">Mertcan</p>
+                    <p class="float-right d-inline-block">01.02.2015</p>
+                    <hr>
+                    <p class="comment-long">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci accusantium quasi a ratione doloremque ipsum, necessitatibus modi dignissimos nesciunt eos?
+                    </p>
+                </div>
+                <div class="comment mt-5 p-5 text-white" style="background-color: #1E1A17;">
+
+                    <p class="d-inline-block">Mertcan</p>
+                    <p class="float-right d-inline-block">01.02.2015</p>
+                    <hr>
+                    <p class="comment-long">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci accusantium quasi a ratione doloremque ipsum, necessitatibus modi dignissimos nesciunt eos?
+                    </p>
+                </div>
+                <div class="comment mt-5 p-5 text-white" style="background-color: #1E1A17;">
+
+                    <p class="d-inline-block">Mertcan</p>
+                    <p class="float-right d-inline-block">01.02.2015</p>
+                    <hr>
+                    <p class="comment-long">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci accusantium quasi a ratione doloremque ipsum, necessitatibus modi dignissimos nesciunt eos?
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Boş veri geldi
+        </div>
+    }
+
+</div>

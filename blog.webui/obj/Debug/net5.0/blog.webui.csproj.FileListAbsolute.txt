@@ -354,3 +354,6 @@ C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Shared\_
 C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\CategoryEdit.cshtml.g.cs
 C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\BloggerDelete.cshtml.g.cs
 C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\CategoryDelete.cshtml.g.cs
+C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\BlogDelete.cshtml.g.cs
+C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Home\BlogDetails.cshtml.g.cs
+C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Shared\Components\Categories\Default.cshtml.g.cs

@@ -16,6 +16,9 @@ namespace blog.business.Concrete
         {
             _bloggerRepository = bloggerRepository;
         }
+
+        public string ErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public void Create(Blogger T)
         {
             _bloggerRepository.Create(T);
@@ -41,6 +44,11 @@ namespace blog.business.Concrete
         public void Update(Blogger T)
         {
             _bloggerRepository.Update(T);
+        }
+
+        public bool Validation(Blogger entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

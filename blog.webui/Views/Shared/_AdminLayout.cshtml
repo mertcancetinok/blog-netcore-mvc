@@ -28,6 +28,7 @@
     <link href="~/css/slick.css" rel="stylesheet" media="all">
     <link href="~/css/select2.min.css" rel="stylesheet" media="all">
     <link href="~/css/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />    
 
     <!-- Main CSS-->
     <link href="~/css/theme.css" rel="stylesheet" media="all">
@@ -535,12 +536,12 @@
                                     <span class="au-breadcrumb-span">Şu an buradasın:</span>
                                     <ul class="list-unstyled list-inline au-breadcrumb__list">
                                         <li class="list-inline-item active">
-                                            <a href="#">Anasayfa</a>
+                                            <a href="#">Admin</a>
                                         </li>
                                         <li class="list-inline-item seprate">
                                             <span>/</span>
                                         </li>
-                                        <li class="list-inline-item">Dashboard</li>
+                                        <li class="list-inline-item">@ViewData["pageName"]</li>
                                     </ul>
                                 </div>
 
@@ -602,7 +603,34 @@
     <script src="~/js/Chart.bundle.min.js"></script>
     <script src="~/js/select2.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @if (TempData["message"] != null)
+    {
+        var message = JsonConvert.DeserializeObject<AlertMessage>(TempData["message"] as String);
+        <script>
 
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-left",
+                "preventDuplicates": false,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["@message.AlertType"]("@message.Message")
+          </script>
+
+
+            }
     <!-- Main JS-->
     <script src="~/js/main.js"></script>
     @if (IsSectionDefined("CustomJS"))

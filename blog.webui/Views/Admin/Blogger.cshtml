@@ -1,6 +1,7 @@
 ﻿@model List<Blogger>
 @{
     Layout = "_AdminLayout";
+    ViewData["pageName"] = "Blogger";
 }
 
 <section class="blog-button p-3">
@@ -66,14 +67,14 @@
                                                     </i>
                                                 </a>
 
-                                                <form method="get" asp-controller="Admin" asp-action="BloggerDelete" >
+                                                <form method="get" asp-controller="Admin" asp-action="BloggerDelete">
                                                     <input type="hidden" name="bloggerId" value="@blogger.Id" />
                                                     <button class="item blogger-delete" type="submit" data-toggle="tooltip" data-placement="top" title="Sil">
                                                         <i class="zmdi zmdi-delete">
-                                                        </i>                                                       
-                                                    </button>                                               
+                                                        </i>
+                                                    </button>
                                                 </form>
-                                                
+
                                                 <button class="item" data-toggle="tooltip" data-placement="top" title="More">
                                                     <i class="zmdi zmdi-more"></i>
                                                 </button>
@@ -102,7 +103,7 @@
     <script>
         $('.blogger-delete').click(function (e) {
             if (confirm("Silmek istediğine eminmisin")) {
-                
+
             }
             else {
                 e.preventDefault();

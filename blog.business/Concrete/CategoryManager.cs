@@ -12,6 +12,9 @@ namespace blog.business.Concrete
     public class CategoryManager : ICategoryService
     {
         private ICategoryRepository _categoryRepository;
+
+        public string ErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         private static string UrlTranslator(Category translator)
         {
             translator.Url = translator.Name;
@@ -65,6 +68,11 @@ namespace blog.business.Concrete
             T.Url = UrlTranslator(T);
             _categoryRepository.Update(T);
             
+        }
+
+        public bool Validation(Category entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

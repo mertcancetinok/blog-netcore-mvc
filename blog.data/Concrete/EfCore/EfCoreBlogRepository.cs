@@ -32,6 +32,38 @@ namespace blog.data.Concrete.EfCore
             }
         }
 
+        public void DeleteWithCategories(Blog T)
+        {
+            using (var context = new BlogContext())
+            {
+                List<BlogCategory> blogCategories = context.BlogCategories
+                    .Where(bg => bg.BlogId == T.Id)
+                    .ToList();
+                if (blogCategories != null)
+                {
+                    context.BlogCategories.RemoveRange(blogCategories);
+                    context.Blogs.Remove(T);
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public Blog GetBlogDetailsWithCategories(string url)
+        {
+            using (var context = new BlogContext())
+            {
+                var entity = context.Blogs
+                            .Where(b => b.Url == url)
+                            .Include(bc => bc.BlogCategories)
+                            .ThenInclude(bc => bc.Category)
+                            .FirstOrDefault();
+                entity.ClickCount += 1;                              
+                context.SaveChanges();
+                return entity;
+            }
+
+        }
+
         public Blog GetByIdWithCategories(int id)
         {
             using (var context = new BlogContext())
@@ -45,6 +77,18 @@ namespace blog.data.Concrete.EfCore
             }
             
         }
-        
+
+        public List<Blog> MostPopularBlog()
+        {
+            using (var context = new BlogContext())
+            {
+                return context.Blogs                    
+                    .OrderByDescending(b => b.ClickCount)
+                    .Take(5)
+                    .Include(bg => bg.BlogCategories)
+                    .ThenInclude(bg => bg.Category)
+                    .ToList();
+            }
+        }
     }
 }

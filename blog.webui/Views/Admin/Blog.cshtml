@@ -1,8 +1,9 @@
 ﻿@model List<Blog>
 
 @{
-    
+
     Layout = "_AdminLayout";
+    ViewData["pageName"] = "Blog";
 }
 
 <section class="blog-button p-3">
@@ -45,7 +46,7 @@
                         <tbody>
                             @if (Model.Count > 0)
                             {
-                                
+
                                 @foreach (var blog in Model)
                                 {
                                     <tr class="tr-shadow">
@@ -62,21 +63,24 @@
                                         <td>@blog.Url</td>
                                         <td>@blog.ReadTime</td>
                                         <td class="desc">@blog.AddedTime.ToString()</td>
-                                        
+
                                         <td>
                                             <div class="table-data-feature">
-                                                
-                                                
-                                                    
-                                                    <a href="/admin/blogs/@blog.Id"  class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                        <i class="zmdi zmdi-edit">
-                                                        </i>
-                                                    </a>
-                                                    
-                                                
-                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                    <i class="zmdi zmdi-delete"></i>
-                                                </button>
+
+
+
+                                                <a href="/admin/blogs/@blog.Id" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="zmdi zmdi-edit">
+                                                    </i>
+                                                </a>
+
+                                                <form asp-controller="Admin" asp-action="BlogDelete" method="get">
+                                                    <input type="hidden" value="@blog.Id" name="blogId" />
+                                                    <button class="item blog-delete" type="submit" data-toggle="tooltip" data-placement="top" title="Sil">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </button>
+                                                </form>
+
                                                 <button class="item" data-toggle="tooltip" data-placement="top" title="More">
                                                     <i class="zmdi zmdi-more"></i>
                                                 </button>
@@ -91,7 +95,7 @@
                                 <tr class="text-danger">Kayıt bulunumadı</tr>
                             }
                         </tbody>
-                        </table>
+                    </table>
                 </div>
                 <!-- END DATA TABLE -->
             </div>
@@ -100,3 +104,17 @@
     </div>
 </section>
 
+@section CustomJS{
+
+    <script>
+        $('.blog-delete').click(function (e) {
+            if (confirm("Silmek istediğine eminmisin")) {
+
+            }
+            else {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+}

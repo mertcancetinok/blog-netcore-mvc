@@ -9,8 +9,11 @@ namespace blog.data.Abstract
 {
     public interface IBlogRepository:IRepository<Blog>
     {
+        List<Blog> MostPopularBlog();
         Blog GetByIdWithCategories(int id);
+        Blog GetBlogDetailsWithCategories(string url);
         void Create(Blog T, int[] categoryIds);
+        void DeleteWithCategories(Blog T);
 
     }
 }

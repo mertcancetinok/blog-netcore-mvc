@@ -32,6 +32,9 @@ namespace blog.business.Concrete
             return translator.Url;
         }
         private IBlogRepository _blogRepository;
+
+        public string ErrorMessage { get; set; }
+
         public BlogManager(IBlogRepository blogRepository)
         {
             _blogRepository = blogRepository;
@@ -68,10 +71,48 @@ namespace blog.business.Concrete
             _blogRepository.Update(T);
         }
 
-        public void Create(Blog T, int[] categoryIds)
+        public bool Create(Blog T, int[] categoryIds)
         {
-             T.Url = UrlTranslator(T);
-            _blogRepository.Create(T, categoryIds);
+            if (Validation(T))
+            {
+                if (categoryIds.Length == 0)
+                {
+                    ErrorMessage += "Lütfen en az bir kategori seçiniz";
+                    return false;
+                }
+                T.Url = UrlTranslator(T);
+                _blogRepository.Create(T, categoryIds);
+                return true;
+            }
+            return false;
+             
+        }
+
+        public void DeleteWithCategories(Blog T)
+        {
+            _blogRepository.DeleteWithCategories(T);
+        }
+
+        public bool Validation(Blog entity)
+        {
+            bool isValid = true;
+            if(string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Content) || entity.ReadTime==0)
+            {
+                isValid = false;
+                ErrorMessage += "Lütfen boş alanları kontrol ediniz";
+            }
+
+            return isValid;
+        }
+
+        public Blog GetBlogDetailsWithCategories(string url)
+        {
+            return _blogRepository.GetBlogDetailsWithCategories(url);
+        }
+
+        public List<Blog> MostPopularBlog()
+        {
+            return _blogRepository.MostPopularBlog();
         }
     }
 }
