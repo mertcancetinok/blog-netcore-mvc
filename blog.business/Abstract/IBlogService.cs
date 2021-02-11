@@ -8,7 +8,7 @@ namespace blog.business.Abstract
 {
     public interface IBlogService:IValidator<Blog>
     {
-        
+        List<Blog> GetBlogsByCategory(string categoryUrl);
         Blog GetById(int id);
         Blog GetBlogDetailsWithCategories(string url);
         List<Blog> MostPopularBlog();

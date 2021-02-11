@@ -24,13 +24,13 @@
                 {
                     var itemClass = a++ == 0 ? "active" : " ";
                     <div class="carousel-item @itemClass">
-                        <img class="d-block w-100 h-60" src="~/img/@item.ImageUrl" width="400" height="600" alt="First slide">
+                        <img class="d-block w-100 h-60" src="~/img/blog/@item.ImageUrl" width="400" height="600" alt="First slide">
                         <div class="carousel-caption mb-3 d-none d-md-block">
                             <div class="carousel-category" style="color:white">
                                 @foreach (var slidercategory in item.BlogCategories)
                                 {
                                     <i class="@slidercategory.Category.IconClass ml-2"></i>
-                                    <a href="#" class="d-inline-block font-weight-bold">
+                                    <a asp-controller="Home" asp-action="BlogList" asp-route-url="@slidercategory.Category.Url" class="d-inline-block font-weight-bold">
                                         @slidercategory.Category.Name
                                     </a>
                                 }
@@ -38,7 +38,7 @@
 
                             </div>
 
-                            <a class="text-left" href="#">@item.Name</a>
+                            <a class="text-left" asp-controller="Home" asp-action="BlogDetails" asp-route-url="@item.Url">@item.Name</a>
                             <p>Okunma Sayısı: @item.ClickCount</p>
                         </div>
                     </div>
@@ -67,36 +67,11 @@
     <h1 class="display-4 text-center">Haberler</h1>
     <hr class="my-4">
     <ul class="timeline">
-        @if (Model.GetAll.Count > 0)
+        @foreach (var blog in Model.GetAll)
         {
-            @foreach (var blog in Model.GetAll)
-            {
-                
-                <li class="timeline-news">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="~/img/deneme.jpg" class="img-fluid" alt="Resim bulunamadı">
-                        </div>
-                        <div class="col-md-8">
-
-                            <p class="text-muted">@blog.ReadTime dk okuma süresi</p>
-                            <a target="_blank" href="https://www.totoprayogo.com/#">@blog.Name</a>
-                            <a href="#" class="float-right"><strong class="text-white">@blog.AddedTime</strong> </a>
-                            <p>@((blog.Content.Length>300)?$"{blog.Content.Substring(0,300)} ...":$"{blog.Content}")</p>
-                            <a class="btn btn-primary float-right mt-5 read-more read-more" asp-controller="Home" asp-action="BlogDetails" asp-route-url="@blog.Url">Devamını Oku</a>
-                        </div>
-                    </div>
-                </li>
-            }
-
-
+            @await Html.PartialAsync("_blog", blog);
         }
-        else
-        {
-            <div class="alert alert-danger">
-                <h3>Aktif bir blog bulunamadı...</h3>
-            </div>
-        }
+
     </ul>
 </section>
 

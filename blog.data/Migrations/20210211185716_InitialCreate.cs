@@ -29,6 +29,7 @@ namespace blog.data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IconClass = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -42,10 +43,12 @@ namespace blog.data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ClickCount = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReadTime = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BloggerId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -84,6 +87,29 @@ namespace blog.data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Writer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    BlogId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BlogCategories_CategoryId",
                 table: "BlogCategories",
@@ -93,6 +119,11 @@ namespace blog.data.Migrations
                 name: "IX_Blogs_BloggerId",
                 table: "Blogs",
                 column: "BloggerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_BlogId",
+                table: "Comments",
+                column: "BlogId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -101,10 +132,13 @@ namespace blog.data.Migrations
                 name: "BlogCategories");
 
             migrationBuilder.DropTable(
-                name: "Blogs");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Blogs");
 
             migrationBuilder.DropTable(
                 name: "Bloggers");

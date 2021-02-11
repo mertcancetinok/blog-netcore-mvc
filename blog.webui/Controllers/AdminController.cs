@@ -1,11 +1,13 @@
 ﻿using blog.business.Abstract;
 using blog.entity;
 using blog.webui.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,11 +18,13 @@ namespace blog.webui.Controllers
         private IBlogService _blogService;
         private IBloggerService _bloggerService;
         private ICategoryService _categoryService;
-        public AdminController(IBlogService blogService,IBloggerService bloggerService,ICategoryService categoryService )
+        private ICommentService _commentService;
+        public AdminController(IBlogService blogService,IBloggerService bloggerService,ICategoryService categoryService,ICommentService commentService )
         {
             this._blogService = blogService;
             this._bloggerService = bloggerService;
             this._categoryService = categoryService;
+            this._commentService = commentService;
         }
         public IActionResult Index()
         {
@@ -42,40 +46,56 @@ namespace blog.webui.Controllers
         {
             return View(_categoryService.GetAll());
         }
-
+        public IActionResult Comment()
+        {
+            return View(_commentService.GetAll());
+        }
         //Edit Controller
         [HttpGet]
         public IActionResult BlogEdit(int id)
         {
-            var blogCategoriesViewModel = new BlogCategoriesViewModel()
-            {
-                Blog = _blogService.GetById(id),
-                Categories = _categoryService.GetAll()
-            };
-            return View(blogCategoriesViewModel);
+            
+            return View(_blogService.GetById(id));
         }
         [HttpPost]
-        public IActionResult BlogEdit(Blog blog)
+        public async Task<IActionResult> BlogEdit(Blog blog,IFormFile file)
         {
             if (ModelState.IsValid)
             {
                 var entity = _blogService.GetById(blog.Id);
-                if (entity == null)
+                if (entity!= null)
                 {
-                    return NotFound();
-                }
-                entity.Name = blog.Name;
-                entity.ReadTime = blog.ReadTime;
-                entity.ImageUrl = blog.ImageUrl;
-                entity.Url = blog.Url;                
-                entity.Content = blog.Content;
-                CreateMessage($"{entity.Name} isimli blog güncellendi","info");
-                _blogService.Update(entity);
-                return RedirectToAction("Index");
-            }
+                    entity.Name = blog.Name;
+                    entity.ReadTime = blog.ReadTime;
+                    entity.Content = blog.Content;
+                    
+                    if (file != null)
+                    {
+                        var extention = Path.GetExtension(file.FileName);
+                        var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+                        entity.ImageUrl = randomName;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\blog",randomName);
+                        using (var stream = new FileStream(path,FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
 
+                    }
+                    else
+                    {
+                        entity.ImageUrl = blog.ImageUrl;
+                    }
+                    _blogService.Update(entity);
+                    CreateMessage($"{entity.Name} isimli blog başarıyla güncellendi", "info");
+                    return RedirectToAction("Blog");
+                }
+                else
+                {
+                    CreateMessage("Kayıt bulunamadı", "error");
+                    return RedirectToAction("Blog");
+                }
+            }
             return View(blog);
-            
             
         }
         public IActionResult BloggerEdit(int id)
@@ -126,8 +146,15 @@ namespace blog.webui.Controllers
             }
             return View(category);
         }
+        public IActionResult CommentEdit(int Id)
+        {
+            var entity = _commentService.GetById(Id);
+            entity.IsApproved = true;
+            _commentService.Update(entity);
+            CreateMessage($"{entity.Writer} isimli yazarın yorumu onaylandı","success");
+            return RedirectToAction("Comment");
+        }
 
-        
         //Create Controller
         public IActionResult BlogCreate()
         {
@@ -140,7 +167,7 @@ namespace blog.webui.Controllers
                 
         }
         [HttpPost]
-        public IActionResult BlogCreate(Blog blog,int[] categoryId)
+        public async Task<IActionResult> BlogCreate(Blog blog,int[] categoryId,IFormFile file)
         {
             var blogCategoriesViewModel = new BlogCategoriesViewModel()
             {
@@ -149,7 +176,23 @@ namespace blog.webui.Controllers
             };
             if (ModelState.IsValid)
             {
-                blog.BloggerId = 5;
+                blog.BloggerId = 1;
+                if (file != null)
+                {
+                    var extention = Path.GetExtension(file.FileName);
+                    var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+                    blog.ImageUrl = randomName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\blog", randomName);
+                    using (var stream = new FileStream(path,FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+                else
+                {
+                    CreateMessage("Blog resmi yüklenemedi", "error");
+                    return View(blogCategoriesViewModel);
+                }
                 if(_blogService.Create(blog, categoryId))
                 {
                     CreateMessage($"{blog.Name} isimli blog başarıyla eklendi", "success");
@@ -233,7 +276,18 @@ namespace blog.webui.Controllers
             }
             return View();
         }
-       
+        public IActionResult CommentDelete(int commentId)
+        {
+            var entity = _commentService.GetById(commentId);
+            if (entity != null)
+            {
+                 CreateMessage($"{entity.Writer} adlı kişinin yorumu silindi","warning");
+                _commentService.Delete(entity);
+                return RedirectToAction("Comment");
+            }
+            return View();
+        }
+        
         //Message Function
         private void CreateMessage(string message, string alertType)
         {

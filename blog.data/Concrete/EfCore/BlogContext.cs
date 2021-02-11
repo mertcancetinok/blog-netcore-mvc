@@ -26,10 +26,7 @@ namespace blog.entity
                 .HasMany(b => b.Blog)
                 .WithOne(bg => bg.Blogger);
 
-            //One to many
-            modelBuilder.Entity<Blog>()
-                .HasMany(c => c.Comments)
-                .WithOne(b => b.Blog);
+            
 
             //Many to many
             modelBuilder.Entity<BlogCategory>()

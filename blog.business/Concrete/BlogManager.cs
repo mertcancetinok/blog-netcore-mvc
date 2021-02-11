@@ -114,5 +114,18 @@ namespace blog.business.Concrete
         {
             return _blogRepository.MostPopularBlog();
         }
+
+        public List<Blog> GetBlogsByCategory(string categoryUrl)
+        {
+            //bool isVaid = true;
+            //if (categoryUrl == null)
+            //{
+            //    isVaid = false;
+            //    ErrorMessage += $"{categoryUrl} adında herhangi bir kategori bulunamadı";                
+            //}
+            return _blogRepository.GetBlogsByCategory(categoryUrl);
+            
+
+        }
     }
 }

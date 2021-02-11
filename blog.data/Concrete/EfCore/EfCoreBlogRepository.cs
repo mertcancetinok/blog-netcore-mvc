@@ -64,6 +64,20 @@ namespace blog.data.Concrete.EfCore
 
         }
 
+        public List<Blog> GetBlogsByCategory(string categoryUrl)
+        {
+            using(var context = new BlogContext())
+            {
+                return context.Blogs
+                    .Include(bc => bc.BlogCategories)
+                    .ThenInclude(bc => bc.Category)
+                    .Where(bc => bc.BlogCategories.Any(c => c.Category.Url == categoryUrl))
+                    .ToList();
+
+                    
+            }
+        }
+
         public Blog GetByIdWithCategories(int id)
         {
             using (var context = new BlogContext())

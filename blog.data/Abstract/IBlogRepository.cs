@@ -10,6 +10,7 @@ namespace blog.data.Abstract
     public interface IBlogRepository:IRepository<Blog>
     {
         List<Blog> MostPopularBlog();
+        List<Blog> GetBlogsByCategory(string categoryUrl);
         Blog GetByIdWithCategories(int id);
         Blog GetBlogDetailsWithCategories(string url);
         void Create(Blog T, int[] categoryIds);

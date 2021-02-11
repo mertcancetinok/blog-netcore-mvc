@@ -1,39 +1,42 @@
-﻿@model BlogCategoriesViewModel
-@{ 
+﻿@model Blog
+@{
     Layout = "_AdminLayout";
 }
 
 <form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogEdit">
     <div class="form-group">
 
-        <label asp-for="@Model.Blog.Name"></label>
-        <input class="form-control" asp-for="@Model.Blog.Name" />
-        <span asp-validation-for="@Model.Blog.Name" class="text-danger"></span>
+        <label asp-for="@Model.Name"></label>
+        <input class="form-control" asp-for="@Model.Name" />
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Blog.Url"></label>
-        <input class="form-control" asp-for="@Model.Blog.Url" disabled />
-        <span asp-validation-for="@Model.Blog.Url" class="text-danger"></span>
+        <label asp-for="@Model.Url"></label>
+        <input class="form-control" asp-for="@Model.Url" disabled />
+        <span asp-validation-for="@Model.Url" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Blog.ReadTime"></label>
-        <input class="form-control" asp-for="@Model.Blog.ReadTime" />
-        <span asp-validation-for="@Model.Blog.ReadTime" class="text-danger"></span>
+        <label asp-for="@Model.ReadTime"></label>
+        <input class="form-control" asp-for="@Model.ReadTime" />
+        <span asp-validation-for="@Model.ReadTime" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Blog.ImageUrl"></label>
-        <input class="form-control" asp-for="@Model.Blog.ImageUrl" />
-        <span asp-validation-for="@Model.Blog.ReadTime" class="text-danger"></span>
+        <label asp-for="@Model.ImageUrl"></label>
+        <input asp-for="@Model.ImageUrl" type="hidden" />
+        <input type="file" name="file" accept="image/png, image/jpeg" />
+        <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Blog.Content"></label>
-        <textarea rows="6" class="form-control" asp-for="@Model.Blog.Content"></textarea>
-        <span asp-validation-for="@Model.Blog.Content" class="text-danger"></span>
+        <label asp-for="@Model.Content"></label>
+        <textarea class="form-control" asp-for="@Model.Content" id="editor"></textarea>
+        <span asp-validation-for="@Model.Content" class="text-danger"></span>
     </div>
     <input type="submit" class="btn btn-success" />
 </form>
 
-@foreach (var category in Model.Categories)
-{
-    @category.Name;
+@section CustomJS{
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
 }

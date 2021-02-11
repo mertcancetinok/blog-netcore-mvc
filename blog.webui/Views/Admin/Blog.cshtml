@@ -58,7 +58,7 @@
                                         </td>
                                         <td>@blog.Name</td>
                                         <td>
-                                            @(blog.Content.Length > 50 ? @blog.Content.Substring(0, 50).ToString() : @blog.Content)
+                                            @Html.Raw(blog.Content.Length > 50 ? blog.Content.Substring(0, 50).ToString() : blog.Content)
                                         </td>
                                         <td>@blog.Url</td>
                                         <td>@blog.ReadTime</td>
@@ -69,7 +69,7 @@
 
 
 
-                                                <a href="/admin/blogs/@blog.Id" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <a asp-controller="Admin" asp-action="BlogEdit" asp-route-id="@blog.Id" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                                                     <i class="zmdi zmdi-edit">
                                                     </i>
                                                 </a>
@@ -81,9 +81,7 @@
                                                     </button>
                                                 </form>
 
-                                                <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                    <i class="zmdi zmdi-more"></i>
-                                                </button>
+                                                
                                             </div>
                                         </td>
                                     </tr>

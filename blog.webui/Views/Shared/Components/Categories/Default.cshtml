@@ -7,10 +7,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="#" class="nav-link text-white">ANASAYFA</a></li>
+                    <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link text-white">Anasayfa</a></li>
                     @foreach (var item in Model)
                     {
-                        <li class="nav-item @(ViewBag.SelectedCategory == item.Url?"active":"")"><a href="#" class="nav-link text-white">@item.Name</a></li>
+                        <li class="nav-item @(ViewBag.SelectedCategory == item.Url?"active":"")"><a asp-controller="Home" asp-action="BlogList" asp-route-url="@item.Url" class="nav-link text-white">@item.Name</a></li>
 
                     }
                 </ul>

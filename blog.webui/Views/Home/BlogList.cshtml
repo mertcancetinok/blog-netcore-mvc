@@ -1,0 +1,7 @@
+﻿@model List<Blog>
+    <ul class="timeline">
+        @foreach (var item in Model)
+        {
+            @await Html.PartialAsync("_blog", item);
+        }
+    </ul>

@@ -116,13 +116,15 @@ namespace blog.data.Migrations
 
             modelBuilder.Entity("blog.entity.Comment", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("BlogId")
+                    b.Property<int>("BlogId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -175,7 +177,9 @@ namespace blog.data.Migrations
                 {
                     b.HasOne("blog.entity.Blog", "Blog")
                         .WithMany("Comments")
-                        .HasForeignKey("BlogId");
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Blog");
                 });

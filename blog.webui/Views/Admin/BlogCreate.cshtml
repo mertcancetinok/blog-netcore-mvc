@@ -1,10 +1,10 @@
-﻿@model BlogCategoriesViewModel 
-@{ 
+﻿@model BlogCategoriesViewModel
+@{
     Layout = "_AdminLayout";
 }
 
 
-<form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogCreate">
+<form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogCreate" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="@Model.Blog.Name"></label>
         <input class="form-control" asp-for="@Model.Blog.Name" required />
@@ -12,12 +12,12 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.Blog.Content"></label>
-        <textarea rows="6" class="form-control" asp-for="@Model.Blog.Content" required></textarea>
+        <textarea class="form-control" asp-for="@Model.Blog.Content" id="editor"></textarea>
         <span asp-validation-for="@Model.Blog.Content" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Blog.ImageUrl"></label>
-        <input class="form-control" asp-for="@Model.Blog.ImageUrl" required />
+        <input asp-for="@Model.Blog.ImageUrl" type="hidden" />
+        <input type="file" name="file" required accept="image/png, image/jpeg" />
         <span asp-validation-for="@Model.Blog.ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -43,3 +43,9 @@
 
     <input type="submit" class="btn btn-success" />
 </form>
+@section CustomJS{
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
+}

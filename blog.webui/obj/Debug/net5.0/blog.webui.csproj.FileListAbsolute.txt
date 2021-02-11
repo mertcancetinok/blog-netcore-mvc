@@ -357,3 +357,6 @@ C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\Ca
 C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\BlogDelete.cshtml.g.cs
 C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Home\BlogDetails.cshtml.g.cs
 C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Shared\Components\Categories\Default.cshtml.g.cs
+C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Home\BlogList.cshtml.g.cs
+C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Shared\_blog.cshtml.g.cs
+C:\Users\mertc\Desktop\blog-net\blog.webui\obj\Debug\net5.0\Razor\Views\Admin\Comment.cshtml.g.cs

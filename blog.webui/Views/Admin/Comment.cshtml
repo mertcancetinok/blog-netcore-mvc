@@ -1,0 +1,111 @@
+﻿@model List<Comment>
+
+@{
+    
+    Layout = "_AdminLayout";
+    ViewData["pageName"] = "Yorumlar";
+}
+<section class="blog-tables p-3 my-5">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">@ViewData["pageName"]</h3>
+                <hr>
+
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </th>
+                                <th>Yorumu Yazan</th>
+                                <th>Yorum İçeriği</th>
+                                <th>Eklenme Tarihi</th>
+                                <th>Onaylı</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count > 0)
+                            {
+
+                                @foreach (var comment in Model)
+                                {
+                                    
+                                    <tr class="tr-shadow">
+                                        <td>
+                                            <label class="au-checkbox">
+                                                <input type="checkbox">
+                                                <span class="au-checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>@comment.Writer</td>
+                                        <td>
+                                            @comment.Content                                            
+                                        </td>
+                                        <td>@comment.AddedTime</td>
+                                        <td>
+                                            <i class="fas @(comment.IsApproved==true?"fa-check":"fa-times")"></i>
+                                        </td>
+
+
+                                        <td>
+                                            <div class="table-data-feature">
+
+
+
+                                                <a asp-controller="Admin" asp-action="CommentEdit" asp-route-id="@comment.Id" class="item" data-toggle="tooltip" data-placement="top" title="Onayla">
+                                                    <i class="zmdi zmdi-check"></i>
+
+                                                </a>
+
+                                                <form asp-controller="Admin" asp-action="CommentDelete" method="get">
+                                                    <input type="hidden" value="@comment.Id" name="commentId" />
+                                                    <button class="item comment-delete" type="submit" data-toggle="tooltip" data-placement="top" title="Sil">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </button>
+                                                </form>
+
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                            else
+                            {
+                                <tr class="text-danger">Kayıt bulunumadı</tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END DATA TABLE -->
+            </div>
+        </div>
+
+    </div>
+</section>
+@section CustomJS{
+
+    <script>
+        $('.comment-delete').click(function (e) {
+            if (confirm("Silmek istediğine eminmisin")) {
+
+            }
+            else {
+                e.preventDefault();
+            }
+        });
+
+
+        
+    </script>
+
+}
