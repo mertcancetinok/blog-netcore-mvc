@@ -15,29 +15,6 @@ namespace blog.business.Concrete
     {
         private ICategoryRepository _categoryRepository;
 
-
-        private static string UrlTranslator(Category translator)
-        {
-            translator.Url = translator.Name;
-            translator.Url = translator.Url.Trim();
-            translator.Url = translator.Url.ToLower();
-            translator.Url = translator.Url.Replace("ş", "s");
-            translator.Url = translator.Url.Replace("Ş", "s");
-            translator.Url = translator.Url.Replace("İ", "i");
-            translator.Url = translator.Url.Replace("I", "i");
-            translator.Url = translator.Url.Replace("ı", "i");
-            translator.Url = translator.Url.Replace("ö", "o");
-            translator.Url = translator.Url.Replace("Ö", "o");
-            translator.Url = translator.Url.Replace("ü", "u");
-            translator.Url = translator.Url.Replace("Ü", "u");
-            translator.Url = translator.Url.Replace("Ç", "c");
-            translator.Url = translator.Url.Replace("ç", "c");
-            translator.Url = translator.Url.Replace("ğ", "g");
-            translator.Url = translator.Url.Replace("Ğ", "g");
-            translator.Url = translator.Url.Replace(" ", "-");
-            
-            return translator.Url;
-        }
         public CategoryManager(ICategoryRepository categoryRepository)
         {
             this._categoryRepository = categoryRepository;
@@ -48,7 +25,7 @@ namespace blog.business.Concrete
             {
                 return new ErrorResult(Messages.CategorNull);
             }
-            T.Url=UrlTranslator(T);
+            T.Url = UrlTranslate.AdresDuzenle(T.Name);
             _categoryRepository.Create(T);
             return new SuccessResult(Messages.CategoryAdded);
             
@@ -84,7 +61,7 @@ namespace blog.business.Concrete
             {
                 return new ErrorResult(Messages.CategorNull);
             }
-            T.Url = UrlTranslator(T);
+            T.Url = UrlTranslate.AdresDuzenle(T.Name);
             _categoryRepository.Update(T);
             return new SuccessResult(Messages.CategoryUpdated);
         }
