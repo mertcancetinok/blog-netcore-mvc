@@ -1,4 +1,5 @@
-﻿using blog.entity;
+﻿using blog.business.Utilities.Results;
+using blog.entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace blog.business.Abstract
 {
-    public interface ICategoryService: IValidator<Category>
+    public interface ICategoryService
     {
-        Category GetById(int id);
-        List<Category> GetAll();
-        void Create(Category T);
-        void Update(Category T);
-        void Delete(Category T);
+        IDataResult<Category> GetById(int id);
+        IDataResult<List<Category>> GetAll();
+        IDataResult<List<Category>> GetAll(int pageSize, int page);
+        IDataResult<int> GetCount();
+        IResult Create(Category T);
+        IResult Update(Category T);
+        IResult Delete(Category T);
     }
 }

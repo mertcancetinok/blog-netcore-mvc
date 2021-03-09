@@ -10,5 +10,6 @@ namespace blog.data.Abstract
     public interface ICommentRepository:IRepository<Comment>
     {
         List<Comment> GetCommentByUrl(string url);
+        int NotApprovedCommentCount();
     }
 }

@@ -29,9 +29,6 @@ namespace blog.data.Migrations
                     b.Property<DateTime?>("AddedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BloggerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClickCount")
                         .HasColumnType("int");
 
@@ -50,9 +47,10 @@ namespace blog.data.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("BloggerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Blogs");
                 });
@@ -70,27 +68,6 @@ namespace blog.data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("BlogCategories");
-                });
-
-            modelBuilder.Entity("blog.entity.Blogger", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bloggers");
                 });
 
             modelBuilder.Entity("blog.entity.Category", b =>
@@ -143,17 +120,6 @@ namespace blog.data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("blog.entity.Blog", b =>
-                {
-                    b.HasOne("blog.entity.Blogger", "Blogger")
-                        .WithMany("Blog")
-                        .HasForeignKey("BloggerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blogger");
-                });
-
             modelBuilder.Entity("blog.entity.BlogCategory", b =>
                 {
                     b.HasOne("blog.entity.Blog", "Blog")
@@ -189,11 +155,6 @@ namespace blog.data.Migrations
                     b.Navigation("BlogCategories");
 
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("blog.entity.Blogger", b =>
-                {
-                    b.Navigation("Blog");
                 });
 
             modelBuilder.Entity("blog.entity.Category", b =>

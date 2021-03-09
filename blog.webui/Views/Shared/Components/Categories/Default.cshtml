@@ -14,6 +14,27 @@
 
                     }
                 </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+            <ul class="navbar-nav ml-auto text-white">
+                <li class="nav-item text-white">
+                    <a href="/account/manage" class="nav-link text-white">
+                        @User.Identity.Name
+                        
+                    </a>
+                </li>
+                @if (User.IsInRole("Admin") || User.IsInRole("Bloger"))
+                {
+                    <li class="nav-item">
+                        <a href="/admin/" class="nav-link text-white">Yönetim Paneli</a>
+                    </li>
+                }
+                <li class="nav-item ">
+                    <a href="/account/logout" class="nav-link text-white">Logout</a>
+                </li>
+            </ul>
+                }
+                
             </div>
         </nav>
     </header>

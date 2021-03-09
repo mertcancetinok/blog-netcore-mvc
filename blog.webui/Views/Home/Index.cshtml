@@ -1,4 +1,5 @@
 ﻿@model HomeModel
+
 @{
     ViewData["Title"] = "Home";
 }
@@ -17,7 +18,7 @@
             }
         </ol>
 
-        <div class="carousel-inner">            
+        <div class="carousel-inner">
             @{
                 var a = 0;
                 foreach (var item in Model.Popular)
@@ -72,18 +73,29 @@
             @await Html.PartialAsync("_blog", blog);
         }
 
+
     </ul>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 0; i < Model.PageModel.TotalPage; i++)
+            {
+                <li class="page-item @(Model.PageModel.CurrentPage==i+1 ? "active":"")">
+                    <a class="page-link" href="/?page=@(i+1)">@(i+1)</a>
+                </li>
+            }
+        </ul>
+    </nav>
 </section>
 
 
-@section Scripts{ 
+@section Scripts{
     <script>
         ScrollReveal().reveal('#slider ,.the-most-clicked,.the-most-clicked-small', {
             delay: 100,
             origin: 'top',
             distance: '5px'
         });
-        ScrollReveal().reveal('.timeline-news p',{
+        ScrollReveal().reveal('.timeline-news p', {
             delay: 100,
             origin: 'left',
             distance: '10px'

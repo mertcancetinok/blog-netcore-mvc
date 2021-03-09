@@ -17,8 +17,7 @@ namespace blog.entity
         public int ReadTime { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? AddedTime { get; set; }
-        public Blogger Blogger { get; set; }
-        public int BloggerId { get; set; }
+        public string UserId { get; set; }
         public List<BlogCategory> BlogCategories { get; set; }
         public List<Comment> Comments { get; set; }
 

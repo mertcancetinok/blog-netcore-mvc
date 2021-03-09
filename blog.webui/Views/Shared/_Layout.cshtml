@@ -10,9 +10,16 @@
 </head>
 <body>
 
-    
     @await Component.InvokeAsync("Categories")
+    
     <main role="main" class="pb-3">
+        @if (TempData["message"] != null)
+        {
+            var message = TempData.GetMessage<AlertMessage>("message");
+            <div class="col-md-12 alert-@message.AlertType">
+                @message.Message
+            </div>
+        }
         @RenderBody()
     </main>
     @await Html.PartialAsync("_footer")

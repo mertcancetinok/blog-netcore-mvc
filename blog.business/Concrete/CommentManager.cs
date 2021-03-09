@@ -1,4 +1,6 @@
 ﻿using blog.business.Abstract;
+using blog.business.Constants;
+using blog.business.Utilities.Results;
 using blog.data.Abstract;
 using blog.entity;
 using System;
@@ -16,41 +18,67 @@ namespace blog.business.Concrete
         {
             this._commentRepository = commentRepository;
         }
-        public string ErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void Create(Comment T)
+        public IResult Create(Comment T)
         {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.CommentNull);
+            }
+
             _commentRepository.Create(T);
+            return new SuccessResult(Messages.CommentAdded);
+            
         }
 
-        public void Delete(Comment T)
+        public IResult Delete(Comment T)
         {
-            _commentRepository.Delete(T);            
+            if (T == null)
+            {
+                return new ErrorResult(Messages.CommentNull);
+            }
+
+            _commentRepository.Delete(T);
+            return new SuccessResult(Messages.CommentDeleted);
         }
 
-        public List<Comment> GetAll()
+        public IDataResult<List<Comment>> GetAll(int pageSize, int page)
         {
-            return _commentRepository.GetAll();
+
+            return new SuccessDataResult<List<Comment>>(_commentRepository.GetAll(pageSize,page));
         }
 
-        public Comment GetById(int id)
+        public IDataResult<Comment> GetById(int id)
         {
-            return _commentRepository.GetById(id);
+            return new SuccessDataResult<Comment>(_commentRepository.GetById(id));            
         }
 
-        public List<Comment> GetCommentByUrl(string Url)
+        public IDataResult<List<Comment>> GetCommentByUrl(string Url)
         {
-            return _commentRepository.GetCommentByUrl(Url);
+            if (string.IsNullOrEmpty(Url))
+            {
+                return new ErrorDataResult<List<Comment>>(Messages.UrlNull);
+            }
+            return new SuccessDataResult<List<Comment>>(_commentRepository.GetCommentByUrl(Url));
         }
 
-        public void Update(Comment T)
+        public IDataResult<int> GetCount()
         {
+            return new SuccessDataResult<int>(_commentRepository.GetCount());
+        }
+
+        public IDataResult<int> NotApprovedCommentCount()
+        {
+            return new SuccessDataResult<int>(_commentRepository.NotApprovedCommentCount());
+        }
+
+        public IResult Update(Comment T)
+        {
+            if (T==null)
+            {
+                return new ErrorResult(Messages.CommentNull);
+            }
             _commentRepository.Update(T);
-        }
-
-        public bool Validation(Comment entity)
-        {
-            throw new NotImplementedException();
+            return new SuccessResult(Messages.CommentUpdated);
         }
     }
 }

@@ -11,6 +11,13 @@ namespace blog.data.Concrete.EfCore
 {
     public class EfCoreBlogRepository : EfCoreGenericRepository<Blog, BlogContext>, IBlogRepository
     {
+        public int GetBlogCount()
+        {
+            using (var context = new BlogContext())
+            {
+                return context.Blogs.Count();
+            }
+        }
         public void Create(Blog T, int[] categoryIds)
         {
             using (var context = new BlogContext())
@@ -64,7 +71,7 @@ namespace blog.data.Concrete.EfCore
 
         }
 
-        public List<Blog> GetBlogsByCategory(string categoryUrl)
+        public List<Blog> GetBlogsByCategory(string categoryUrl, int pageSize, int page = 1)
         {
             using(var context = new BlogContext())
             {
@@ -72,9 +79,23 @@ namespace blog.data.Concrete.EfCore
                     .Include(bc => bc.BlogCategories)
                     .ThenInclude(bc => bc.Category)
                     .Where(bc => bc.BlogCategories.Any(c => c.Category.Url == categoryUrl))
+                    .Skip((page - 1) * pageSize).Take(pageSize)
                     .ToList();
-
+                
                     
+            }
+        }
+        public int GetBlogsByCategoryCount(string categoryUrl)
+        {
+            using (var context = new BlogContext())
+            {
+                return context.Blogs
+                    .Include(bc => bc.BlogCategories)
+                    .ThenInclude(bc => bc.Category)
+                    .Where(bc => bc.BlogCategories.Any(c => c.Category.Url == categoryUrl))
+                    .Count();
+
+
             }
         }
 

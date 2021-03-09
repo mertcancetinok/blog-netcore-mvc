@@ -1,4 +1,6 @@
 ﻿using blog.business.Abstract;
+using blog.business.Constants;
+using blog.business.Utilities.Results;
 using blog.data.Abstract;
 using blog.entity;
 using System;
@@ -13,7 +15,6 @@ namespace blog.business.Concrete
     {
         private ICategoryRepository _categoryRepository;
 
-        public string ErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private static string UrlTranslator(Category translator)
         {
@@ -41,38 +42,56 @@ namespace blog.business.Concrete
         {
             this._categoryRepository = categoryRepository;
         }
-        public void Create(Category T)
+        public IResult Create(Category T)
         {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.CategorNull);
+            }
             T.Url=UrlTranslator(T);
             _categoryRepository.Create(T);
+            return new SuccessResult(Messages.CategoryAdded);
             
         }
 
-        public void Delete(Category T)
+        public IResult Delete(Category T)
         {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.CategorNull);
+            }
             _categoryRepository.Delete(T);
+            return new SuccessResult(Messages.CategoryDeleted);
+        }
+        public IDataResult<List<Category>> GetAll()
+        {
+            return new SuccessDataResult<List<Category>>(_categoryRepository.GetAll());
+        }
+        public IDataResult<List<Category>>  GetAll(int pageSize, int page)
+        {
+            return new SuccessDataResult<List<Category>>(_categoryRepository.GetAll(pageSize,page));
         }
 
-        public List<Category> GetAll()
-        {
-            return _categoryRepository.GetAll();
+        public IDataResult<Category> GetById(int id)
+        {            
+            return new SuccessDataResult<Category>(_categoryRepository.GetById(id));
+            
         }
 
-        public Category GetById(int id)
+        public IResult Update(Category T)
         {
-            return _categoryRepository.GetById(id);
-        }
-
-        public void Update(Category T)
-        {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.CategorNull);
+            }
             T.Url = UrlTranslator(T);
             _categoryRepository.Update(T);
-            
+            return new SuccessResult(Messages.CategoryUpdated);
         }
 
-        public bool Validation(Category entity)
+        public IDataResult<int> GetCount()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<int>(_categoryRepository.GetCount());
         }
     }
 }

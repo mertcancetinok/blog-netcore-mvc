@@ -5,6 +5,7 @@
 
 
 <form method="post" asp-controller="Admin" class="mx-auto my-5 col-lg-6" asp-action="BlogCreate" enctype="multipart/form-data">
+    <input type="hidden" name="userId" value="@User.Identity.Name" />
     <div class="form-group">
         <label asp-for="@Model.Blog.Name"></label>
         <input class="form-control" asp-for="@Model.Blog.Name" required />

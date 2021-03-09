@@ -12,6 +12,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using blog.business.Abstract;
 using blog.business.Concrete;
+using Microsoft.EntityFrameworkCore;
+using blog.webui.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace blog.webui
 {
@@ -27,15 +31,49 @@ namespace blog.webui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer("Server=DESKTOP-FTI4HM5;Database=Blog;Trusted_Connection=True;"));
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
             services.AddControllersWithViews();
             services.AddScoped<blog.data.Abstract.IBlogRepository, EfCoreBlogRepository>();
-            services.AddScoped<blog.data.Abstract.IBloggerRepository, EfCoreBloggerRepository>();
             services.AddScoped<blog.data.Abstract.ICategoryRepository, EfCoreCategoryRepository>();
             services.AddScoped<blog.data.Abstract.ICommentRepository, EfCoreCommentRepository>();
             services.AddScoped<IBlogService, BlogManager>();
-            services.AddScoped<IBloggerService, BloggerManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICommentService, CommentManager>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie = new CookieBuilder()
+                {
+                    HttpOnly = true,
+                    Name = ".Blog.Security.Cookie",
+                    SameSite = SameSiteMode.Strict
+                };
+                options.LoginPath = "/Admin/Login";
+                options.AccessDeniedPath = "/Admin/AccessDenied";
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+            });
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,8 +92,10 @@ namespace blog.webui
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

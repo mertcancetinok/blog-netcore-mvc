@@ -9,5 +9,6 @@ namespace blog.webui.Models
     {
         public string Message { get; set; }
         public string AlertType { get; set; }
+
     }
 }

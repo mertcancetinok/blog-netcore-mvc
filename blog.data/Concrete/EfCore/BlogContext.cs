@@ -10,21 +10,16 @@ namespace blog.entity
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Blogger> Bloggers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<BlogCategory> BlogCategories{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
-            optionsBuilder.UseSqlServer("Server=DESKTOP-OJ7358A;Database=Blog;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-FTI4HM5;Database=Blog;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //One to one
-            modelBuilder.Entity<Blogger>()
-                .HasMany(b => b.Blog)
-                .WithOne(bg => bg.Blogger);
 
             
 

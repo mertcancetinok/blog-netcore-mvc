@@ -11,6 +11,10 @@ p{
   font-weight: 300;
   line-height: 32px;  
 }
+img {
+    max-width: 100%;
+    height: auto !important;
+}
 
 .navbar-brand{
     font-size: 2rem;
@@ -28,13 +32,9 @@ ul.navbar-nav>li>a{
 .popular,footer{
     background-color: #141414;
 }
-.popular{
-    
-    height: 110vh !important;
-}
 .popular #slider{
     margin-top: 1% !important;
-    /* transform: translateY(-90%); */
+
 }
 
 

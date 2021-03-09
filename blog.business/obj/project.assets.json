@@ -5741,19 +5741,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mertc\\.nuget\\packages\\": {}
+    "C:\\Users\\Berkcan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.business\\blog.business.csproj",
+      "projectUniqueName": "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.business\\blog.business.csproj",
       "projectName": "blog.business",
-      "projectPath": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.business\\blog.business.csproj",
-      "packagesPath": "C:\\Users\\mertc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.business\\obj\\",
+      "projectPath": "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.business\\blog.business.csproj",
+      "packagesPath": "C:\\Users\\Berkcan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.business\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mertc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Berkcan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5767,11 +5767,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\mertc\\Desktop\\blog-net\\blog.data\\blog.data.csproj": {
-              "projectPath": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.data\\blog.data.csproj"
+            "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.data\\blog.data.csproj": {
+              "projectPath": "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.data\\blog.data.csproj"
             },
-            "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj": {
-              "projectPath": "C:\\Users\\mertc\\Desktop\\blog-net\\blog.entity\\blog.entity.csproj"
+            "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.entity\\blog.entity.csproj": {
+              "projectPath": "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.entity\\blog.entity.csproj"
             }
           }
         }

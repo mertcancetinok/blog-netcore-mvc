@@ -1,7 +1,22 @@
-﻿@model List<Blog>
+﻿@model DataPagingModel<Blog>
+
     <ul class="timeline">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Data)
         {
             @await Html.PartialAsync("_blog", item);
         }
     </ul>
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @for (int i = 0; i < Model.PageModel.TotalPage; i++)
+                {
+                    <li class="page-item @(Model.PageModel.CurrentPage==i+1 ? "active":"")">
+                        <a class="page-link" href="/kategori/@Model.PageModel.Category?page=@(i+1)">@(i+1)</a>
+                    </li>
+                }
+
+            </ul>
+        </nav>
+    </div>    
+ 

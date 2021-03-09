@@ -1,4 +1,6 @@
 ﻿using blog.business.Abstract;
+using blog.business.Constants;
+using blog.business.Utilities.Results;
 using blog.data.Abstract;
 using blog.entity;
 using System;
@@ -9,123 +11,120 @@ namespace blog.business.Concrete
 {
     public class BlogManager : IBlogService
     {
-        private static string UrlTranslator(Blog translator)
-        {
-            translator.Url = translator.Name;
-            translator.Url = translator.Url.Trim();
-            translator.Url = translator.Url.ToLower();
-            translator.Url = translator.Url.Replace("ş", "s");
-            translator.Url = translator.Url.Replace("Ş", "s");
-            translator.Url = translator.Url.Replace("İ", "i");
-            translator.Url = translator.Url.Replace("I", "i");
-            translator.Url = translator.Url.Replace("ı", "i");
-            translator.Url = translator.Url.Replace("ö", "o");
-            translator.Url = translator.Url.Replace("Ö", "o");
-            translator.Url = translator.Url.Replace("ü", "u");
-            translator.Url = translator.Url.Replace("Ü", "u");
-            translator.Url = translator.Url.Replace("Ç", "c");
-            translator.Url = translator.Url.Replace("ç", "c");
-            translator.Url = translator.Url.Replace("ğ", "g");
-            translator.Url = translator.Url.Replace("Ğ", "g");
-            translator.Url = translator.Url.Replace(" ", "-");
-            translator.AddedTime = DateTime.Now;
-            return translator.Url;
-        }
         private IBlogRepository _blogRepository;
-
-        public string ErrorMessage { get; set; }
 
         public BlogManager(IBlogRepository blogRepository)
         {
             _blogRepository = blogRepository;
         }
-        public void Create(Blog T)
+        public IResult Create(Blog T)
         {
-            T.Url = UrlTranslator(T);
-            _blogRepository.Create(T);
-       
-            
-        }
-
-        public void Delete(Blog T)
-        {
-            _blogRepository.Delete(T);
-            
-        }
-
-        public List<Blog> GetAll()
-        {
-            return _blogRepository.GetAll();
-            
-        }
-
-        
-        public Blog GetById(int id)
-        {
-            return _blogRepository.GetById(id);
-        }
-
-        public void Update(Blog T)
-        {
-             T.Url = UrlTranslator(T);
-            _blogRepository.Update(T);
-        }
-
-        public bool Create(Blog T, int[] categoryIds)
-        {
-            if (Validation(T))
+            if (T == null)
             {
-                if (categoryIds.Length == 0)
-                {
-                    ErrorMessage += "Lütfen en az bir kategori seçiniz";
-                    return false;
-                }
-                T.Url = UrlTranslator(T);
-                _blogRepository.Create(T, categoryIds);
-                return true;
+                return new ErrorResult(Messages.BlogNull);
             }
-            return false;
+
+            _blogRepository.Create(T);
+            return new SuccessResult(Messages.BlogAdded);
+            
+        }
+
+        public IResult Delete(Blog T)
+        {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.BlogNull);
+            }
+
+            _blogRepository.Delete(T);
+            return new SuccessResult(Messages.BlogDeleted);
+            
+        }
+
+        public IDataResult<List<Blog>> GetAll(int page, int pageSize)
+        {
+
+            return new SuccessDataResult<List<Blog>>(_blogRepository.GetAll(page, pageSize),Messages.BlogList);
+        }
+        
+
+        public IDataResult<Blog> GetById(int id)
+        {
+            return new SuccessDataResult<Blog>(_blogRepository.GetById(id));
+        }
+
+        public IResult Update(Blog T)
+        {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.BlogNull);
+            }
+
+            T.Url = UrlTranslate.AdresDuzenle(T.Name);
+            _blogRepository.Update(T);
+            return new ErrorResult(Messages.BlogUpdated);
+        }
+
+        public IResult Create(Blog T, int[] categoryIds)
+        {
+            if (T==null)
+            {
+                return new ErrorResult(Messages.BlogNull);
+            }
+            if (categoryIds.Length == 0)
+            {
+                return new ErrorResult(Messages.CategorNull);
+            }
+
+
+            T.Url = UrlTranslate.AdresDuzenle(T.Name);
+            _blogRepository.Create(T, categoryIds);
+            return new SuccessResult(Messages.BlogAdded);
              
         }
 
-        public void DeleteWithCategories(Blog T)
+        public IResult DeleteWithCategories(Blog T)
         {
+            if (T == null)
+            {
+                return new ErrorResult(Messages.BlogNull);
+            }
             _blogRepository.DeleteWithCategories(T);
+            return new SuccessResult(Messages.BlogDeleted);
         }
 
-        public bool Validation(Blog entity)
+        public IDataResult<Blog> GetBlogDetailsWithCategories(string url)
         {
-            bool isValid = true;
-            if(string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Content) || entity.ReadTime==0)
+            if (string.IsNullOrEmpty(url))
             {
-                isValid = false;
-                ErrorMessage += "Lütfen boş alanları kontrol ediniz";
+                return new ErrorDataResult<Blog>(Messages.UrlNull);
             }
 
-            return isValid;
+            return new SuccessDataResult<Blog>(_blogRepository.GetBlogDetailsWithCategories(url));
         }
 
-        public Blog GetBlogDetailsWithCategories(string url)
+        public IDataResult<List<Blog>> MostPopularBlog()
         {
-            return _blogRepository.GetBlogDetailsWithCategories(url);
+            return new SuccessDataResult<List<Blog>>(_blogRepository.MostPopularBlog());
         }
 
-        public List<Blog> MostPopularBlog()
+        public IDataResult<List<Blog>> GetBlogsByCategory(string categoryUrl, int page, int pageSize)
         {
-            return _blogRepository.MostPopularBlog();
+            if (string.IsNullOrEmpty(categoryUrl))
+            {
+                return new ErrorDataResult<List<Blog>>(Messages.UrlNull);
+            }
+            return new SuccessDataResult<List<Blog>>(_blogRepository.GetBlogsByCategory(categoryUrl,page,pageSize));
         }
 
-        public List<Blog> GetBlogsByCategory(string categoryUrl)
+        public IDataResult<int> GetCount()
         {
-            //bool isVaid = true;
-            //if (categoryUrl == null)
-            //{
-            //    isVaid = false;
-            //    ErrorMessage += $"{categoryUrl} adında herhangi bir kategori bulunamadı";                
-            //}
-            return _blogRepository.GetBlogsByCategory(categoryUrl);
-            
+            return new SuccessDataResult<int>(_blogRepository.GetBlogCount());
+        }
 
+        public IDataResult<int> GetBlogsByCategoryCount(string categoryUrl)
+        {
+            return new SuccessDataResult<int>(_blogRepository.GetBlogsByCategoryCount(categoryUrl));
         }
     }
 }

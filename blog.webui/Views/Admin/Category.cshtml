@@ -1,4 +1,4 @@
-﻿@model List<Category>
+﻿@model DataPagingModel<Category>
 @{
     Layout = "_AdminLayout";
     ViewData["pageName"] = "Kategori";
@@ -39,10 +39,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model.Count > 0)
+                            @if (Model.Data.Count > 0)
                             {
 
-                                @foreach (var category in Model)
+                                @foreach (var category in Model.Data)
                                 {
                                     <tr class="tr-shadow">
                                         <td>
@@ -90,6 +90,17 @@
                     </table>
                 </div>
                 <!-- END DATA TABLE -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mt-2">
+                        @for (int i = 0; i < Model.PageModel.TotalPage; i++)
+                        {
+                            <li class="page-item @(Model.PageModel.CurrentPage==i+1 ? "active":"")">
+                                <a class="page-link" href="/admin/category?page=@(i+1)">@(i+1)</a>
+                            </li>
+                        }
+
+                    </ul>
+                </nav>
             </div>
         </div>
 

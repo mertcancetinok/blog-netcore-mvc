@@ -14,13 +14,13 @@ namespace blog.webui.ViewComponents
         {
             this._categoryService = categoryService;
         }
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int page = 1)
         {
             if (RouteData.Values["category"] != null)
             {
                 ViewBag.SelectedCategory = RouteData?.Values["category"];
             }
-            return View(_categoryService.GetAll()); 
+            return View(_categoryService.GetAll().Data); 
         }
     }
 }

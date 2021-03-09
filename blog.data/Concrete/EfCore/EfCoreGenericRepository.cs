@@ -30,12 +30,19 @@ namespace blog.data.Concrete.EfCore
                 context.SaveChanges();
             }
         }
-
         public List<TEntity> GetAll()
         {
             using (var context = new TContext())
             {
                 return context.Set<TEntity>().ToList();
+
+            }
+        }
+        public List<TEntity> GetAll(int pageSize,int page=1)
+        {
+            using (var context = new TContext())
+            {
+                return context.Set<TEntity>().Skip((page-1)*pageSize).Take(pageSize).ToList();
 
             }
             
@@ -49,6 +56,14 @@ namespace blog.data.Concrete.EfCore
             {
                 return context.Set<TEntity>().Find(id);
                     
+            }
+        }
+
+        public int GetCount()
+        {
+            using (var context = new TContext())
+            {
+                return context.Set<TEntity>().Count();
             }
         }
 

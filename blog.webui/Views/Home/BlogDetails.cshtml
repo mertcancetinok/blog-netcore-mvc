@@ -1,70 +1,62 @@
 ﻿@model BlogCommentsViewModel
 <div class="container">
-    @if (Model != null)
+    <p class="text-muted font-weight-normal mt-5">Anasayfa>Uzay>@Model.Blog.Name</p>
+    <p class="text-muted">@Model.Blog.ReadTime dakika okuma süresi</p>
+    <p class="text-right">@Model.Blog.AddedTime</p>
+    @foreach (var category in Model.Blog.BlogCategories)
     {
+        <a class="text-right">@category.Category.Name</a>
+    }
+    <div class="row my-3">
+        <div class="col-md-8">
+            <img class="img-fluid" src="~/img/blog/@Model.Blog.ImageUrl" />
 
-        <p class="text-muted font-weight-normal mt-5">Anasayfa>Uzay>@Model.blog.Name</p>
-        <p class="text-muted">@Model.blog.ReadTime dakika okuma süresi</p>
-        <p class="text-right">@Model.blog.AddedTime</p>
-        @foreach (var item in Model.blog.BlogCategories)
-        {
-        <a class="text-right">@item.Category.Name</a> 
-        }
-        <div class="row my-3">
-            <div class="col-md-8">
-                <img class="img-fluid" src="~/img/blog/@Model.blog.ImageUrl" />
+            @Html.Raw(Model.Blog.Content)
+        </div>
+        <div class="col-md-4">
+            <h2 class="h4 read-popular-news">Popüler Haberler</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
 
-                @Html.Raw(Model.blog.Content)
+        <div class="comments col-md-12 my-5">
+            <h2>YORUMLAR</h2>
+            <div class="new-comment my-5">
+                <form method="POST" asp-controller="Home" asp-action="BlogDetails">
+                    <input type="hidden" value="@Model.Blog.Id" name="blogId" />
+                    <input type="hidden" value="@Model.Blog.Url" name="returnUrl" />
+                    <textarea cols="10" class="form-control" rows="5" style="width: 100%;" asp-for="@Model.NewComment.Content" required placeholder="Yorumunuz"></textarea>
+                    <p>240</p>
+                    <input class="form-control w-25 mt-2" asp-for="@Model.NewComment.Writer" required placeholder="Nickname">
+                    <input type="submit" value="Gönder" class="btn btn-outline-success float-right">
+                </form>
             </div>
-            <div class="col-md-4">
-                <h2 class="h4 read-popular-news">Popüler Haberler</h2>
-                <ul class="list-group">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-            </div>
 
-            <div class="comments col-md-12 my-5">
-                <h2>YORUMLAR</h2>
-                <div class="new-comment my-5">
-                    <form method="POST" asp-controller="Home" asp-action="BlogDetails">
-                        <input type="hidden" value="@Model.blog.Id" name="blogId" />
-                        <textarea cols="10" class="form-control" rows="5" style="width: 100%;" asp-for="@Model.NewComment.Content"></textarea>
-                        <p>240</p>
-                        <input class="form-control w-25 mt-2" asp-for="@Model.NewComment.Writer">
-                        <input type="submit" value="Gönder" class="btn btn-outline-success float-right">
-                    </form>
-                </div>
-
-                @foreach (var item in Model.GetCommentByUrl)
+            @foreach (var itemUrl in Model.GetCommentByUrl)
+            {
+                if (itemUrl.IsApproved)
                 {
-                    if (item.IsApproved)
-                    {
-                        <div class="comment mt-5 p-5 text-white" style="background-color: #1E1A17;">
+                    <div class="comment mt-5 p-5 text-white" style="background-color: #1E1A17;">
 
-                            <p class="d-inline-block">@item.Writer</p>
-                            <p class="float-right d-inline-block">@item.AddedTime</p>
-                            <hr>
-                            <p class="comment-long">
-                                @item.Content
-                            </p>
-                        </div>
-                    }
-
+                        <p class="d-inline-block">@itemUrl.Writer</p>
+                        <p class="float-right d-inline-block">@itemUrl.AddedTime</p>
+                        <hr>
+                        <p class="comment-long">
+                            @itemUrl.Content
+                        </p>
+                    </div>
                 }
 
+            }
 
 
-            </div>
+
         </div>
-    }else
-    {
-        <div class="alert alert-warning">
-            Boş veri geldi
-        </div>
-    }
+    </div>
 
 </div>

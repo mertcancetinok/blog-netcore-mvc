@@ -11,6 +11,16 @@ namespace blog.data.Concrete.EfCore
 {
     public class EfCoreCommentRepository : EfCoreGenericRepository<Comment, BlogContext>, ICommentRepository
     {
+        public int NotApprovedCommentCount()
+        {
+            using (var context = new BlogContext())
+            {
+                return context.Comments
+                    .Where(c => c.IsApproved == false)
+                    .Count();
+            }
+        }
+
         List<Comment> ICommentRepository.GetCommentByUrl(string url)
         {
             using (var context = new BlogContext())

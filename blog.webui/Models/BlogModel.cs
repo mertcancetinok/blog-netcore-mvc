@@ -12,7 +12,6 @@ namespace blog.webui.Models
         
 
         public int BlogId { get; set; }
-        
         public int BloggerId { get; set; }
         [Required]
         public string BlogName { get; set; }
@@ -21,8 +20,7 @@ namespace blog.webui.Models
         public string BlogContent { get; set; }
         [Required]
         public int? BlogReadTime { get; set; }
-
-        public Blogger Blogger { get; set; }
+        public string UserId { get; set; }
 
         
 

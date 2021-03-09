@@ -1,4 +1,5 @@
-﻿using blog.entity;
+﻿using blog.business.Utilities.Results;
+using blog.entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,17 +7,19 @@ using System.Text;
 
 namespace blog.business.Abstract
 {
-    public interface IBlogService:IValidator<Blog>
+    public interface IBlogService
     {
-        List<Blog> GetBlogsByCategory(string categoryUrl);
-        Blog GetById(int id);
-        Blog GetBlogDetailsWithCategories(string url);
-        List<Blog> MostPopularBlog();
-        List<Blog> GetAll();
-        void Create(Blog T);
-        bool Create(Blog T, int[] categoryIds);
-        void Update(Blog T);
-        void Delete(Blog T);
-        void DeleteWithCategories(Blog T);
+        IDataResult<List<Blog>> GetBlogsByCategory(string categoryUrl,int pageSize, int page);
+        IDataResult<Blog> GetById(int id);
+        IDataResult<Blog> GetBlogDetailsWithCategories(string url);
+        IDataResult<List<Blog>> MostPopularBlog();
+        IDataResult<List<Blog>> GetAll(int pageSize,int page);
+        IDataResult<int> GetCount();
+        IDataResult<int> GetBlogsByCategoryCount(string categoryUrl);
+        IResult Create(Blog T);
+        IResult Create(Blog T, int[] categoryIds);
+        IResult Update(Blog T);
+        IResult Delete(Blog T);
+        IResult DeleteWithCategories(Blog T);
     }
 }

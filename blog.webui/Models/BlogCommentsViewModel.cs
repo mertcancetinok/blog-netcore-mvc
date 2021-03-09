@@ -8,7 +8,7 @@ namespace blog.webui.Models
 {
     public class BlogCommentsViewModel
     {
-        public Blog blog { get; set; }
+        public Blog Blog { get; set; }
         public List<Comment> GetCommentByUrl { get; set; }
         public Comment NewComment { get; set; }
     }

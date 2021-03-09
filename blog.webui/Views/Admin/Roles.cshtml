@@ -1,0 +1,105 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+
+    Layout = "_AdminLayout";
+    ViewData["pageName"] = "Roles";
+}
+
+<section class="blog-button p-3">
+    <div class="container">
+        <div class="row">
+            <a class="btn btn-success p-4 mr-1" asp-controller="Admin" asp-action="RoleCreate">Rol Ekle</a>
+        </div>
+    </div>
+</section>
+
+<section class="blog-tables p-3 my-5">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Roller</h3>
+                <hr>
+
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </th>
+                                <th>Id</th>
+                                <th>Rol Adı</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() > 0)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="tr-shadow">
+                                        <td>
+                                            <label class="au-checkbox">
+                                                <input type="checkbox">
+                                                <span class="au-checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+
+
+                                        <td>
+                                            <div class="table-data-feature">
+
+
+
+                                                <a href="/admin/roleedit/@item.Id" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="zmdi zmdi-edit">
+                                                    </i>
+                                                </a>
+
+                                                <form asp-controller="Admin" asp-action="RoleDelete" method="get">
+                                                    <input type="hidden" value="@item.Id" name="rolId" />
+                                                    <button class="item role-delete" data-toggle="tooltip" data-placement="top" title="Sil" type="submit">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </button>
+                                                </form>
+
+                                                <button class="item role-delete" data-toggle="tooltip" data-placement="top" title="More">
+                                                    <i class="zmdi zmdi-more"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END DATA TABLE -->
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section CustomJS{
+
+    <script>
+        $('.role-delete').click(function (e) {
+            if (confirm("Silmek istediğine eminmisin")) {
+
+            }
+            else {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+}

@@ -7,12 +7,13 @@
             <div class="col-md-4">
                 <img src="~/img/blog/@Model.ImageUrl" class="img-fluid" alt="Resim bulunamadı">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 blog">
 
                 <p class="text-muted">@Model.ReadTime dk okuma süresi</p>
                 <a target="_blank" href="https://www.totoprayogo.com/#">@Model.Name</a>
                 <a href="#" class="float-right"><strong class="text-white">@Model.AddedTime</strong> </a>
-                <p>@Html.Raw((Model.Content.Length > 300) ? $"{Model.Content.Substring(0, 300)} ..." : $"{Model.Content}")</p>
+                @*<p>@Html.Raw((Model.Content.Length > 300) ? $"{Model.Content.Substring(0, 300)} ..." : $"{Model.Content}")</p>*@
+                <p>@(Model.Content.Length>300?Html.Raw(Model.Content.Substring(0,300)):Html.Raw(Model.Content))</p>
                 <a class="btn btn-primary float-right mt-5 read-more read-more" asp-controller="Home" asp-action="BlogDetails" asp-route-url="@Model.Url">Devamını Oku</a>
             </div>
         </div>
