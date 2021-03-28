@@ -114,15 +114,7 @@ namespace blog.webui.Controllers
             }
             return View();
         }
-        private void CreateMessage(string message, string alertType)
-        {
-            var alertMessage = new AlertMessage()
-            {
-                Message = message,
-                AlertType = alertType
-            };
-            TempData["message"] = JsonConvert.SerializeObject(alertMessage);
-        }
+        
 
 
 

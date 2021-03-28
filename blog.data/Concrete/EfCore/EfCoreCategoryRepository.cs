@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace blog.data.Concrete.EfCore
 {
-    public class EfCoreCategoryRepository:EfCoreGenericRepository<Category,BlogContext>,ICategoryRepository
+    public class EfCoreCategoryRepository:EfCoreGenericRepository<Category>,ICategoryRepository
     {
+        public EfCoreCategoryRepository(BlogContext context) : base(context)
+        {
 
+        }
+        
     }
 }

@@ -16,14 +16,16 @@ using Microsoft.EntityFrameworkCore;
 using blog.webui.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using blog.entity;
 
 namespace blog.webui
 {
     public class Startup
     {
+        private IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,7 +33,8 @@ namespace blog.webui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer("Server=DESKTOP-FTI4HM5;Database=Blog;Trusted_Connection=True;"));
+            services.AddDbContext<BlogContext>(options => options.UseSqlServer(_configuration.GetConnectionString("SqlServerConnection")));
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(_configuration.GetConnectionString("SqlServerConnection")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
             services.AddControllersWithViews();
             services.AddScoped<blog.data.Abstract.IBlogRepository, EfCoreBlogRepository>();

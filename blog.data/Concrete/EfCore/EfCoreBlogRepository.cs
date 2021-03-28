@@ -9,121 +9,120 @@ using System.Threading.Tasks;
 
 namespace blog.data.Concrete.EfCore
 {
-    public class EfCoreBlogRepository : EfCoreGenericRepository<Blog, BlogContext>, IBlogRepository
+    public class EfCoreBlogRepository : EfCoreGenericRepository<Blog>, IBlogRepository
     {
+        public EfCoreBlogRepository(BlogContext context):base(context)
+        {
+
+        }
+        private BlogContext BlogContext
+        {
+            get { return context as BlogContext; }
+        }
         public int GetBlogCount()
         {
-            using (var context = new BlogContext())
-            {
-                return context.Blogs.Count();
-            }
+           
+                return BlogContext.Blogs.Count();
+            
         }
         public void Create(Blog T, int[] categoryIds)
         {
-            using (var context = new BlogContext())
-            {
-                
-                context.Blogs.Add(T);
-                
+
+
+                BlogContext.Blogs.Add(T);
+
 
                 foreach (var categoryId in categoryIds)
                 {
-                    
-                    var category = context.Categories.Find(categoryId);
+
+                    var category = BlogContext.Categories.Find(categoryId);
                     var BlogCategories = new BlogCategory() { Blog = T, Category = category };
-                    context.BlogCategories.Add(BlogCategories);
+                BlogContext.BlogCategories.Add(BlogCategories);
                 }
-                context.SaveChanges();
-                
-          
-            }
+                BlogContext.SaveChanges();
+
+
+            
         }
 
         public void DeleteWithCategories(Blog T)
         {
-            using (var context = new BlogContext())
-            {
-                List<BlogCategory> blogCategories = context.BlogCategories
+            
+                List<BlogCategory> blogCategories = BlogContext.BlogCategories
                     .Where(bg => bg.BlogId == T.Id)
                     .ToList();
                 if (blogCategories != null)
                 {
-                    context.BlogCategories.RemoveRange(blogCategories);
-                    context.Blogs.Remove(T);
+                BlogContext.BlogCategories.RemoveRange(blogCategories);
+                BlogContext.Blogs.Remove(T);
                 }
-                context.SaveChanges();
-            }
+                BlogContext.SaveChanges();
+            
         }
 
         public Blog GetBlogDetailsWithCategories(string url)
         {
-            using (var context = new BlogContext())
-            {
-                var entity = context.Blogs
+            
+                var entity = BlogContext.Blogs
                             .Where(b => b.Url == url)
                             .Include(bc => bc.BlogCategories)
                             .ThenInclude(bc => bc.Category)
                             .FirstOrDefault();
-                entity.ClickCount += 1;                              
-                context.SaveChanges();
+                entity.ClickCount += 1;
                 return entity;
-            }
+            
 
         }
 
         public List<Blog> GetBlogsByCategory(string categoryUrl, int pageSize, int page = 1)
         {
-            using(var context = new BlogContext())
-            {
-                return context.Blogs
+            
+                return BlogContext.Blogs
                     .Include(bc => bc.BlogCategories)
                     .ThenInclude(bc => bc.Category)
                     .Where(bc => bc.BlogCategories.Any(c => c.Category.Url == categoryUrl))
                     .Skip((page - 1) * pageSize).Take(pageSize)
                     .ToList();
-                
-                    
-            }
+
+
+            
         }
         public int GetBlogsByCategoryCount(string categoryUrl)
         {
-            using (var context = new BlogContext())
-            {
-                return context.Blogs
+            
+                return BlogContext.Blogs
                     .Include(bc => bc.BlogCategories)
                     .ThenInclude(bc => bc.Category)
                     .Where(bc => bc.BlogCategories.Any(c => c.Category.Url == categoryUrl))
                     .Count();
 
 
-            }
+            
         }
 
         public Blog GetByIdWithCategories(int id)
         {
-            using (var context = new BlogContext())
-            {
-                return context.Blogs
+            
+                return BlogContext.Blogs
                     .Where(i => i.Id == id)
                     .Include(c => c.BlogCategories)
                     .ThenInclude(c => c.Category)
                     .FirstOrDefault();
-                    
-            }
+
             
+
         }
 
         public List<Blog> MostPopularBlog()
         {
-            using (var context = new BlogContext())
-            {
-                return context.Blogs                    
+            
+                return BlogContext.Blogs
                     .OrderByDescending(b => b.ClickCount)
                     .Take(5)
                     .Include(bg => bg.BlogCategories)
                     .ThenInclude(bg => bg.Category)
                     .ToList();
-            }
+            
         }
     }
 }

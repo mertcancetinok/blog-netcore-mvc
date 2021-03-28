@@ -167,6 +167,11 @@ namespace blog.webui.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
         [HttpGet]
         [AuthorizeRoles(Role.Admin)]
         public async Task<IActionResult> ManageEmployeRoles(string userId)
@@ -292,7 +297,12 @@ namespace blog.webui.Controllers
                     var resultUpdate = _blogService.Update(result.Data);
                     if (resultUpdate.Success)
                     {
-                        CreateMessage(result.Message,"info");
+
+                        TempData.SetMessage("message", new AlertMessage()
+                        {
+                            AlertType = "info",
+                            Message = resultUpdate.Message
+                        });
 
                         return RedirectToAction("Blog");
                     }
@@ -613,7 +623,6 @@ namespace blog.webui.Controllers
                     return RedirectToAction("Comment");
                 }
             }
-            CreateMessage($"{result.Message}","danger");
             return View();
         }
         [AuthorizeRoles(Role.Admin)]
@@ -644,7 +653,7 @@ namespace blog.webui.Controllers
 
 
         }
-        [AuthorizeRoles(Role.Admin)]
+        
         public async Task<IActionResult> EmployeDelete(string employeId)
         {
             var entity = await _userManager.FindByNameAsync(employeId);
@@ -673,15 +682,7 @@ namespace blog.webui.Controllers
             return RedirectToAction("Employe");
 
         }
-        //Message Function
-        private void CreateMessage(string message, string alertType)
-        {
-            var alertMessage = new AlertMessage()
-            {
-                Message=message,
-                AlertType=alertType
-            };
-            TempData["message"] = JsonConvert.SerializeObject(alertMessage);
-        } 
+        
+        
     }
 }

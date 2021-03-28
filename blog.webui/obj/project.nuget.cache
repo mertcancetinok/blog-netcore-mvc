@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zaJL/UYJEVDFlj5D7hs3nUsdA6zo+bNlzKHexl1jOhbUNNq18gNKQY+3qbvKtu+bKG5vCZUiP7ibJ+Yomw+5PA==",
+  "dgSpecHash": "aa6sNdQT5HgQqMYtNxBDbWGb2+g24nbpaDaBAoJCkjOz4CDi8KV9R0++xaGWpKJpSatXWZ2/s9gfDQzMDjCW+A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Berkcan\\Desktop\\masaüstü\\blog-net\\blog.webui\\blog.webui.csproj",
+  "projectFilePath": "C:\\Users\\Berkcan\\Desktop\\blog-net\\blog.webui\\blog.webui.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Berkcan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Berkcan\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.3\\microsoft.aspnetcore.cryptography.internal.5.0.3.nupkg.sha512",

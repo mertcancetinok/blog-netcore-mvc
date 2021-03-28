@@ -9,28 +9,37 @@ using System.Threading.Tasks;
 
 namespace blog.data.Concrete.EfCore
 {
-    public class EfCoreCommentRepository : EfCoreGenericRepository<Comment, BlogContext>, ICommentRepository
+    public class EfCoreCommentRepository : EfCoreGenericRepository<Comment>, ICommentRepository
     {
+        public EfCoreCommentRepository(BlogContext context):base(context)
+        {
+
+        }
+        private BlogContext BlogContext
+        {
+            get
+            {
+                return context as BlogContext;
+            }
+        }
         public int NotApprovedCommentCount()
         {
-            using (var context = new BlogContext())
-            {
-                return context.Comments
+            
+                return BlogContext.Comments
                     .Where(c => c.IsApproved == false)
                     .Count();
-            }
+            
         }
 
         List<Comment> ICommentRepository.GetCommentByUrl(string url)
         {
-            using (var context = new BlogContext())
-            {
-                return context.Comments
+            
+                return BlogContext.Comments
                     .Include(bc => bc.Blog)
                     .Where(bc => bc.Blog.Url == url)
                     .ToList();
-                    
-            }
+                   
+            
         }
     }
 }

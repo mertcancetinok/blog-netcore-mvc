@@ -1,23 +1,20 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
-
-
 namespace blog.entity
 {
     public partial class BlogContext : DbContext
     {
+        public BlogContext(DbContextOptions<BlogContext> options):base(options)
+        {
+
+        }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<BlogCategory> BlogCategories{ get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            
-            optionsBuilder.UseSqlServer("Server=DESKTOP-FTI4HM5;Database=Blog;Trusted_Connection=True;");
-        }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
